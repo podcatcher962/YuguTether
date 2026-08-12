@@ -12,7 +12,7 @@
 <title>与古为徒 · YuguTether</title>
 <style>
 :root{--bg:#0d0d1a;--card:#13132b;--bdr:#1e3799;--accent:#4a69bd;--gold:#ffd700;--text:#c8d6e5;--dim:#7f8fa6;--m:#4CAF50;--f:#F44336;--e:#FF9800;--inp:#0c0c22;--inpText:#f1f2f6;--mutedBdr:#2a2a4a;--foot:#576574;--grid:rgba(30,55,153,0.06);--inset:rgba(0,0,0,0.3)}
-html[data-theme="light"]{--bg:#eef1f8;--card:#ffffff;--bdr:#b8c4e8;--accent:#4a69bd;--gold:#b8860b;--text:#2f3542;--dim:#636e72;--inp:#e8ecf5;--inpText:#2f3542;--mutedBdr:#c8d0e5;--foot:#a4b0be;--grid:rgba(74,105,189,0.08);--inset:rgba(0,0,0,0.04)}
+html[data-theme="light"]{--bg:#f2e6cd;--card:#faf0dc;--bdr:#b8914f;--accent:#8a6a35;--gold:#7a5c1e;--text:#3e2f1d;--dim:#7d6a4d;--inp:#f7ecd6;--inpText:#3e2f1d;--mutedBdr:#d8c39a;--foot:#a08a63;--grid:rgba(138,106,53,0.08);--inset:rgba(90,60,30,0.05)}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:'Courier New','Microsoft YaHei',monospace;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;background-image:repeating-linear-gradient(0deg,transparent,transparent 31px,var(--grid) 31px,var(--grid) 32px),repeating-linear-gradient(90deg,transparent,transparent 31px,var(--grid) 31px,var(--grid) 32px)}
 .hdr{text-align:center;margin:12px 0 16px}
@@ -57,7 +57,7 @@ input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 8px rgba(74
 #detailBack{cursor:pointer;color:var(--accent);font-size:13px;margin-bottom:10px;display:inline-block}
 @media(max-width:480px){.card{padding:14px 16px 18px}.hdr h1{font-size:22px}.cat-bar{gap:4px}.cat-chip{padding:5px 9px;font-size:11px}}
 </style>
-<script>document.documentElement.setAttribute('data-theme',(function(){try{return localStorage.getItem('ygtwTheme')||'dark'}catch(e){return'dark'}})());</script>
+<script>document.documentElement.setAttribute('data-theme',(function(){try{return localStorage.getItem('ygtwTheme')||'light'}catch(e){return'light'}})());</script>
 </head>
 <body>
 
@@ -555,7 +555,7 @@ function showT(msg){const t=document.getElementById('toast');t.textContent=msg;t
 // ========== THEME ==========
 function applyTheme(t){document.documentElement.setAttribute('data-theme',t);const b=document.getElementById('btnTheme');if(b)b.textContent=t==='light'?'☀️':'🌙';}
 function toggleTheme(){const cur=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';applyTheme(cur);try{localStorage.setItem('ygtwTheme',cur);}catch(e){}}
-(function(){try{applyTheme(localStorage.getItem('ygtwTheme')||'dark');}catch(e){applyTheme('dark');}})();
+(function(){try{applyTheme(localStorage.getItem('ygtwTheme')||'light');}catch(e){applyTheme('light');}})();
 
 // ========== LANGUAGE ==========
 function setL(l){
