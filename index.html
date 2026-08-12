@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="与古为徒 · Ask the Ancients — 300+ 现代困境 × 古人智慧对照库，覆盖职场、人际、情绪、家庭、成长、理财、健康七大领域，中英双语，免费开源，单文件即用。">
+<meta name="keywords" content="与古为徒,古人智慧,庄子,老子,论语,人生解惑,古人语录,现代困境,免费,在线">
+<meta property="og:title" content="与古为徒 · YuguTether">
+<meta property="og:description" content="在人群里走路时，手里牵一根古人递来的绳 · 300+ 困境 × 古人原话 · 中英双语">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0d0d1a">
+<title>与古为徒 · YuguTether</title>
+<style>
+:root{--bg:#0d0d1a;--card:#13132b;--bdr:#1e3799;--accent:#4a69bd;--gold:#ffd700;--text:#c8d6e5;--dim:#7f8fa6;--m:#4CAF50;--f:#F44336;--e:#FF9800;--inp:#0c0c22;--inpText:#f1f2f6;--mutedBdr:#2a2a4a;--foot:#576574;--grid:rgba(30,55,153,0.06);--inset:rgba(0,0,0,0.3)}
+html[data-theme="light"]{--bg:#eef1f8;--card:#ffffff;--bdr:#b8c4e8;--accent:#4a69bd;--gold:#b8860b;--text:#2f3542;--dim:#636e72;--inp:#e8ecf5;--inpText:#2f3542;--mutedBdr:#c8d0e5;--foot:#a4b0be;--grid:rgba(74,105,189,0.08);--inset:rgba(0,0,0,0.04)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Courier New','Microsoft YaHei',monospace;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;background-image:repeating-linear-gradient(0deg,transparent,transparent 31px,var(--grid) 31px,var(--grid) 32px),repeating-linear-gradient(90deg,transparent,transparent 31px,var(--grid) 31px,var(--grid) 32px)}
+.hdr{text-align:center;margin:12px 0 16px}
+.hdr h1{font-size:24px;color:var(--gold);letter-spacing:5px;text-shadow:0 0 24px rgba(255,215,0,0.25)}
+.hdr .sub{color:var(--dim);font-size:12px;margin-top:3px;letter-spacing:2px}
+.menu-bar{display:flex;justify-content:center;gap:16px;margin:0 0 12px;flex-wrap:wrap;align-items:center}
+.menu-bar a{color:var(--dim);font-size:13px;cursor:pointer;letter-spacing:2px;text-decoration:none;border-bottom:1px solid transparent;transition:all 0.2s}
+.menu-bar a:hover{color:var(--gold);border-color:var(--accent)}
+.card{background:var(--card);border:3px solid var(--bdr);padding:20px 24px 24px;max-width:560px;width:100%;position:relative;box-shadow:0 0 40px rgba(74,105,189,0.2),inset 0 0 60px var(--inset);margin-bottom:16px}
+.card::before{content:'';position:absolute;top:-3px;left:-3px;right:-3px;bottom:-3px;border:1px solid var(--accent);pointer-events:none}
+.card::after{content:'';position:absolute;top:6px;left:6px;right:6px;bottom:6px;border:1px solid rgba(74,105,189,0.2);pointer-events:none}
+input,textarea{width:100%;padding:10px 12px;background:var(--inp);color:var(--inpText);border:2px solid var(--bdr);font-size:14px;font-family:inherit;outline:none;resize:none;transition:border-color 0.2s}
+input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 8px rgba(74,105,189,0.3)}
+.btn{width:100%;padding:13px;margin-top:10px;background:linear-gradient(180deg,#2c3e80,#1e2d6a);color:var(--gold);border:2px solid var(--accent);font-size:15px;font-family:inherit;cursor:pointer;letter-spacing:3px;transition:all 0.15s;text-shadow:0 0 8px rgba(255,215,0,0.3)}
+.btn:hover{background:linear-gradient(180deg,#3b50a0,#253d8a);border-color:var(--gold)}.btn:active{transform:scale(0.97)}
+.btn.sm{font-size:12px;padding:9px;letter-spacing:1px}
+.btn.muted{background:var(--inp);color:var(--dim);border-color:var(--mutedBdr)}.btn.muted:hover{color:var(--text);border-color:var(--accent)}
+.cat-bar{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;justify-content:center}
+.cat-chip{padding:6px 14px;font-size:12px;letter-spacing:1px;border:1px solid var(--bdr);background:var(--inp);color:var(--dim);cursor:pointer;transition:all 0.15s}
+.cat-chip:hover,.cat-chip.active{border-color:var(--accent);color:var(--gold);background:var(--card)}
+.result-card{background:var(--inp);border:1px solid var(--bdr);padding:14px 16px;margin:8px 0;cursor:pointer;transition:all 0.15s}
+.result-card:hover{border-color:var(--accent);background:var(--card)}
+.result-card .dilemma{font-size:16px;color:var(--gold);margin-bottom:4px}
+.result-card .meta{font-size:12px;color:var(--dim)}
+.detail-panel{padding:12px 0}
+.detail-panel .ancient{font-size:18px;color:var(--text);line-height:2;padding:12px;background:var(--card);border-left:3px solid var(--gold);margin:8px 0}
+.detail-panel .source{font-size:16px;color:var(--dim);text-align:right;margin-top:-4px;margin-bottom:8px}
+.detail-panel .vernacular{font-size:15px;color:var(--text);line-height:1.9;margin:8px 0;padding:0 4px}
+.detail-panel .english{font-size:14px;color:var(--dim);font-style:italic;line-height:1.8;margin:8px 0;padding:0 4px;border-left:2px solid var(--accent);padding-left:10px}
+.detail-panel .heart{font-size:16px;color:var(--gold);text-align:center;padding:12px;background:rgba(255,215,0,0.05);border:1px solid rgba(255,215,0,0.2);margin:12px 0;letter-spacing:2px}
+.toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:var(--card);color:var(--gold);padding:10px 24px;border:1px solid var(--accent);font-size:12px;letter-spacing:1px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:99}
+.toast.show{opacity:1}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal-box{background:var(--card);border:2px solid var(--bdr);padding:24px;max-width:500px;width:100%;max-height:80vh;overflow-y:auto;position:relative;font-size:14px;line-height:1.8;color:var(--text)}
+.modal-box h2{color:var(--gold);font-size:18px;letter-spacing:3px;margin-bottom:8px}
+.modal-box p,.modal-box li{font-size:14px;line-height:1.9;margin:4px 0}
+.modal-close{position:absolute;top:10px;right:16px;color:var(--dim);font-size:22px;cursor:pointer;background:none;border:none;font-family:inherit}
+.foot{margin-top:24px;color:var(--foot);font-size:12px;text-align:center}.foot a{color:var(--accent);text-decoration:none}
+.fav-star{color:var(--dim);cursor:pointer;transition:color 0.2s;font-size:14px;margin-left:6px}
+.fav-star.active{color:var(--gold)}
+#detailBack{cursor:pointer;color:var(--accent);font-size:13px;margin-bottom:10px;display:inline-block}
+@media(max-width:480px){.card{padding:14px 16px 18px}.hdr h1{font-size:22px}.cat-bar{gap:4px}.cat-chip{padding:5px 9px;font-size:11px}}
+</style>
+<script>document.documentElement.setAttribute('data-theme',(function(){try{return localStorage.getItem('ygtwTheme')||'dark'}catch(e){return'dark'}})());</script>
+</head>
+<body>
+
+<div class="hdr">
+<h1>与古为徒 · YuguTether</h1>
+<div class="sub">YuguTether · 300+ Wisdom Pairs · Bilingual · 庄子/老子/论语/周易/史记</div>
+<div class="sub" style="color:var(--gold);font-size:10px;margin-top:6px">在人群里走路时，手里牵一根古人递来的绳</div>
+</div>
+
+<div class="menu-bar">
+<a onclick="openM('guide')">📖 <span id="tGuide">使用说明</span></a>
+<a onclick="openM('disclaim')">⚠️ <span id="tDisclaim">免责声明</span></a>
+<a onclick="openM('about')">ℹ️ <span id="tAbout">关于</span></a>
+<span style="color:var(--bdr)">|</span>
+<a id="btnZh" class="active" onclick="setL('zh')">中</a>
+<a id="btnEn" onclick="setL('en')">EN</a>
+<a id="btnTheme" onclick="toggleTheme()" style="font-size:13px">🌙</a>
+</div>
+
+<div class="card" id="mainPage">
+<div id="dailyCard" style="margin-bottom:10px;padding:10px 14px;background:var(--card);border:1px solid var(--gold);cursor:pointer" onclick="viewDetail(dailyIdx)"></div>
+<input type="text" id="searchBox" placeholder="输入困境关键词，如：焦虑、加班、催婚..." oninput="doSearch()">
+<div class="cat-bar" id="catBar"></div>
+<div style="display:flex;gap:8px;margin-top:8px">
+<button class="btn muted sm" onclick="randomOne()" style="flex:1">🎲 <span id="btnRandom">随机一句</span></button>
+<button class="btn muted sm" onclick="showFavorites()" style="flex:1">⭐ <span id="btnFav">收藏夹</span> <span id="favCount">0</span></button>
+<button class="btn muted sm" onclick="showHistory()" style="flex:1">🕘 <span id="btnHist">历史</span></button>
+</div>
+<div id="resultList" style="margin-top:10px;max-height:55vh;overflow-y:auto"></div>
+</div>
+
+<div class="card" id="detailPage" style="display:none">
+<div id="detailBack" onclick="backToMain()">◀ <span id="lblBack">返回</span></div>
+<div class="detail-panel" id="detailContent"></div>
+<div style="display:flex;gap:8px;margin-top:8px">
+<button class="btn muted sm" onclick="toggleFav()" style="flex:1">⭐ <span id="btnToggleFav">收藏/取消</span></button>
+<button class="btn muted sm" onclick="randomOne()" style="flex:1">🎲 <span id="btnRandom2">再来一句</span></button>
+<button class="btn muted sm" onclick="copyCard()" style="flex:1">📋 <span id="btnCopy">复制</span></button>
+<button class="btn muted sm" onclick="downloadCard()" style="flex:1">🖼️ <span id="btnDl">下载图</span></button>
+</div>
+<button class="btn sm muted" onclick="scrollTop2()" id="topBtn" style="display:none;margin-top:8px">⬆ <span id="btnTop">返回顶部</span></button>
+</div>
+
+<div class="foot">© 与古为徒 · YuguTether · Forever Chitanda · 参考古典文献 · 仅供文化参考</div>
+<div class="toast" id="toast"></div>
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeM()"><div class="modal-box" id="modalBox"></div></div>
+<canvas id="cv" style="display:none" width="420" height="520"></canvas>
+
+<script>
+const CATS=["💼 职场事业","👥 人际交往","😔 情绪心理","👨‍👩‍👧 家庭关系","📈 自我成长","💰 消费理财","🫀 身心健康"];
+const CATS_EN=["Work","Social","Emotion","Family","Growth","Money","Health"];
+
+// ========== 300 条问答库 ==========
+// [困境, 古人原文, 出处, 白话, English, 今日心法, Heart, 分类0-6]
+const Q=[
+["同事太卷我怎么办","为人之所为者，人亦无疵焉，是之谓与人为徒。成而上比者，与古为徒。","庄子·人间世","做好分内事，不与人争短长。内守其志，外顺其流。","Do your part without competing. Guard your inner purpose while flowing with the current.","外面随俗，内里守界","Blend in outwardly, stand firm inwardly",0],
+["想辞职又怕找不到更好的","君子藏器于身，待时而动","周易·系辞","不是不能辞，是你现在手里有没有'器'。没有就先藏着，一边上班一边磨。","Don't quit empty-handed. Build your arsenal first, then act when the moment is right.","辞的是职，不是底气","Quit the job, not your confidence",0],
+["开会时不敢发言怕说错","上善若水，水善利万物而不争","道德经·第八章","水不争高下，但水永远在场。你不用抢着当主角，先学会'在场'，再学会'发声'。","Water never competes, yet it's always present. Learn to be present before learning to speak up.","先在场，再发声","Be present first, speak later",0],
+["同事升职比我快心里不平衡","小知不及大知，小年不及大年","庄子·逍遥游","他的'年'是升职速度，你的'年'是专业深度。别用别人的尺子量自己的命。","His timeline is promotion speed; yours is professional depth. Don't measure your life with another's ruler.","各走各的年","Walk your own path",0],
+["被领导当众批评很难堪","就不欲入，和不欲出","庄子·人间世","当众批评是面子，保住工作是里子。面子丢了能捡，里子丢了难补。忍的是气，不是志。","Public criticism is face; keeping the job is substance. Endure the anger, not the ambition.","忍的是气，不是志","Endure the anger, keep the ambition",0],
+["想搞副业但时间精力不够","吾生也有涯，而知也无涯","庄子·养生主","生有涯，精力更有涯。副业不是加法，是减法——先砍掉无效社交，再谈副业。","Life has limits, so does energy. Side hustle means subtraction—cut useless socializing first.","精力是零和游戏，先减后加","Energy is zero-sum; subtract before adding",0],
+["被领导阴阳怪气怎么接","天下之至柔，驰骋天下之至坚","道德经·第四十三章","舌头软，牙齿硬，老了牙齿掉光舌头还在。你越软，他的硬话越没着力点。","The soft tongue outlasts the hard teeth. The softer you are, the less purchase their harsh words have.","软不是弱，是无着力点","Softness is not weakness; it leaves no grip",0],
+["公司裁员怕被优化","死生，命也；其有夜旦之常，天也","庄子·大宗师","裁员像昼夜交替，是公司的'天'，不是你的'命'。你只是换了个白天。","Layoffs are like day and night—the company's nature, not your fate. You're just changing your morning.","公司的天，不是你的命","Company's nature, not your destiny",0],
+["想拒绝额外工作怕得罪人","毋意，毋必，毋固，毋我","论语·子罕","不臆测对方会生气，不必须答应，不固执己见，不只考虑自己。温和说'我手头有XX，下周行吗？'","Don't assume they'll be angry, don't feel you must say yes. Gently offer an alternative timeline.","拒绝的是事，不是人","Refuse the task, not the person",0],
+["领导让我做假账怎么办","凫胫虽短，续之则忧；鹤胫虽长，断之则悲","庄子·骈拇","你的'胫'是底线，断了就再也长不回。宁可被骂死板，别让自己短命。","Your bottom line is like a leg—once broken, it never grows back. Better to be called rigid than to lose yourself.","底线是胫，断了难续","Bottom line broken can't be mended",0],
+["同事总让我帮忙取快递带饭","知人者智，自知者明","道德经·第三十三章","知道同事需要什么是智，知道自己的边界在哪是明。第一次就温和拒绝，比第十次容易。","Knowing others' needs is wisdom; knowing your boundaries is insight. A gentle refusal the first time beats the tenth.","第一次拒绝是明，第十次是累","First refusal is wise; tenth is burnout",0],
+["想转行又怕从零开始","潜龙勿用","周易·乾卦","转行不是飞龙在天，是潜龙勿用。先偷偷学，再慢慢动，别一上来就辞职。","Career change is not flying high—it's the hidden dragon. Learn quietly, move gradually; don't quit first.","潜龙不是废，是蓄势","The hidden dragon isn't useless; it's charging up",0],
+["领导偏心给同事更多机会","井蛙不可以语于海者，拘于虚也","庄子·秋水","领导的海里，你只是井蛙。不是你不够好，是他的井太小。","In the leader's ocean, you're a frog in a well. It's not that you're not good enough; his well is just too small.","不是你不行，是他的井太小","It's not you—his perspective is limited",0],
+["想考证提升自己又没时间","发愤忘食，乐以忘忧","论语·述而","不是没时间，是你把刷手机的时间当成了放松。考证不是苦役，是乐事。","It's not that you have no time—you treat phone scrolling as rest. Certification isn't drudgery; it's joy.","时间像海绵，挤的是无效放松","Time is a sponge; squeeze out mindless scrolling",0],
+["同事抢我功劳想找领导告状","不刻意而高，无仁义而修","庄子·刻意","功劳像风，你追它它跑；你种树，它自己来。先把自己的树种好，风自然会吹过来。","Credit is like wind—chase it, it flees; plant your tree, it comes. Grow yourself first.","追功劳是刻意，种能力是自然","Chasing credit is forced; building skill is natural",0],
+["公司团建不想去怕不合群","与人为徒","庄子·人间世","与人为徒不是每场都去，是去了不扫兴、不去不解释。找个借口说家里有事。","Blending in doesn't mean showing up every time. Go without ruining the mood; skip without over-explaining.","合群是选择，不是必须","Fitting in is a choice, not an obligation",0],
+["想给领导提建议又怕被穿小鞋","天子之剑，以燕谿石城为锋","庄子·说剑","提建议像出剑，锋芒太露容易伤己。先私下说，用'我有个想法'开头。","Giving advice is like drawing a sword—too sharp, you cut yourself. Say it privately, start with 'I have an idea.'","剑要出鞘，先藏锋","Before drawing the sword, hide the edge",0],
+["同事离职想跟着走","德不孤，必有邻","论语·里仁","同事走了你的德还在，自然有新邻。别因为别人走，就觉得自己该走。","When colleagues leave, your virtue remains. New neighbors will come. Don't follow just because others left.","邻是德带来的，不是跟着来的","Neighbors come with virtue, not by following",0],
+["领导让加班我想陪家人","帝王之功，圣人之余事也","庄子·让王","加班是帝王之功（公司的事），陪家人是圣人之事（你的事）。余事可以放，正事不能丢。","Overtime is the empire's business; family is the sage's work. The former can wait, the latter cannot.","公司事是余，家事是正","Work is secondary; family is primary",0],
+["想跳槽到竞争对手公司","将欲取之，必固与之","道德经·第三十六章","跳之前先想清楚你从现在的公司取了什么——经验、人脉、能力。没取够就跳，容易空手赴敌。","Before jumping, know what you've gained here—experience, connections, skills. Leave only when you've taken enough.","跳槽不是逃，是取足而走","Job-hopping isn't fleeing; it's leaving fully equipped",0],
+["同事总抱怨公司我该附和吗","形莫若就，心莫若和","庄子·山木","表面上点点头（形就），心里别跟着怨（心和）。附和多了，你会变成你讨厌的人。","Nod outwardly, but don't let resentment take root inside. Echo complaints long enough, you become them.","嘴可以就，心不能和","Mouth may nod; heart must not follow",0],
+["想创业又怕失败","屯，刚柔始交而难生","周易·屯卦","创业像屯卦，刚柔刚开始交，肯定难。难不是失败，是开始。","Starting up is like the Tun hexagram—difficulty at the beginning. Difficulty is not failure; it's the start.","难是开始，不是终点","Difficulty is the beginning, not the end",0],
+["领导说以后不会亏待你，信吗","巧者劳而知者忧，无能者无所求","庄子·列御寇","巧者劳，知者忧，无能者反而无所求。别等以后，现在的回报才是真的。","The capable labor, the wise worry, the unambitious want nothing. Don't wait for later—today's reward is real.","以后是饼，现在是饭","Later is a promise; now is the meal",0],
+["上班如上坟完全没有热情","知其不可奈何而安之若命","庄子·人间世","如果暂时无法改变，就先接纳。把工作当成修行的道场，在乏味中找到你自己的节奏。","If you can't change it now, accept it. Treat work as your training ground; find your rhythm within the tedium.","工作是道场，乏味是修行","Work is the temple; tedium is the practice",0],
+["上司经常改需求导致加班","合抱之木，生于毫末；九层之台，起于累土","道德经·第六十四章","大事从小处着眼。每次确认需求前多沟通三分钟，把毫末理清，后面的大树才不会长歪。","Great things start small. Clarify for three more minutes each time—the tiny roots decide whether the tree grows straight.","多问三分钟，少加三小时","Ask three more minutes, save three more hours",0],
+["面试失败很沮丧","飘风不终朝，骤雨不终日","道德经·第二十三章","狂风不会刮一早上，暴雨不会下一整天。面试失败只是一阵风，不是整个季节。","No storm lasts all morning. This rejection is just a gust, not the whole season.","失败是阵风，不是季节","Rejection is a gust, not the season",0],
+["同事借钱不还，要不要催","人而无信，不知其可也","论语·为政","他失了信，你守了义。催一次是提醒，催两次是底线，催三次就当买个教训。","He lost trust; you kept integrity. Remind once, draw the line twice, treat the third as a lesson bought.","钱是试金石，试的是信","Money is a touchstone for trust",1],
+["亲戚催婚烦不胜烦","鹪鹩巢于深林，不过一枝","庄子·逍遥游","你的人生像鹪鹩的巢，只需要一枝，不是整片森林。亲戚的森林，不是你的枝。","You only need one branch, not the whole forest. Their forest is not your branch.","你的枝，自己选","Your branch, your choice",1],
+["朋友聚会我不知道说什么","知者不言，言者不知","道德经·第五十六章","不知道说什么时就听。听是大知，抢着说是小知。","When you don't know what to say, listen. Listening is great wisdom; rushing to speak is petty cleverness.","听是金，说是银","Listening is gold; speaking is silver",1],
+["被人误解想拼命解释","辩也者，有不辩也","庄子·齐物论","解释是辩，有些事不辩更清楚。时间会替你说话，不用急着张嘴。","Some truths are clearer without debate. Time will speak for you—don't rush to open your mouth.","解释是辩，时间是证","Argument debates; time proves",1],
+["朋友升职我嫉妒得睡不着","己欲立而立人，己欲达而达人","论语·雍也","你想立，先帮朋友立；你想达，先帮朋友达。嫉妒是堵，成全是通。","You want to rise? First help your friend rise. Envy is blockage; generosity is flow.","嫉妒是堵，成全是通","Envy blocks; generosity flows",1],
+["同事总在群里@我很烦","至人之用心若镜，不将不迎","庄子·应帝王","群消息像镜子里的像，来了不迎，走了不送。看到就回，没看到就当没发生。","Messages are reflections in a mirror—don't welcome or resist them. Reply if you see; let go if you don't.","消息是镜中像，别往心里去","Messages are reflections; don't take them to heart",1],
+["被人背后说坏话想报复","万物负阴而抱阳，冲气以为和","道德经·第四十二章","坏话是阴，你的平静是阳。阴阳冲气自然和解。报复是加阴，只会更乱。","Gossip is yin; your calm is yang. They naturally reconcile. Revenge adds more yin—only makes things messier.","报复是加阴，平静是抱阳","Revenge adds darkness; calm embraces light",1],
+["朋友约我帮忙我不想帮","邦有道，则仕；邦无道，则可卷而怀之","论语·卫灵公","朋友的事像邦，有道就帮，无道就卷而怀之——温和拒绝。","A friend's request is like a state—serve when it's right, withdraw gracefully when it's not.","帮是仕，不帮是怀","Help is service; refusal is grace",1],
+["觉得别人都不懂我","以道观之，物无贵贱","庄子·秋水","用道看，你和别人都一样；用尺子看，你永远不够好。扔掉别人的尺子。","From the Tao's view, you're equal to all. Stop measuring yourself with others' rulers.","尺子是别人的，人生是自己的","Their ruler; your life",1],
+["想和领导搞好关系又怕被说拍马屁","就不欲入，和不欲出","庄子·人间世","靠近领导但不入（不谄媚），和谐但不张扬。默默把事做好比说十句好话有用。","Stay close but not fawning; be harmonious but not showy. Quietly doing the work beats ten flattering words.","近是就，谄是入","Close is proximity; flattery is intrusion",1],
+["朋友失恋我不知道怎么安慰","飘风不终朝，骤雨不终日","道德经·第二十三章","失恋像狂风暴雨，不会一直下。你不用止雨，只要陪他撑伞。","Heartbreak is a storm that won't last forever. You don't need to stop the rain—just hold the umbrella.","不用止雨，只需撑伞","Don't stop the rain; hold the umbrella",1],
+["被人调侃暗讽不知怎么回","狗不以善吠为良，人不以善言为贤","庄子·徐无鬼","会叫的狗不是好狗，会说的人不是贤人。调侃你的人只是善吠，你不用当真。","Barking dogs aren't good dogs; talkative people aren't wise ones. Those who mock you are just barking.","调侃是吠，你不是狗","Their mockery is barking; you're not a dog",1],
+["想加喜欢的人的微信不敢","见义不为，无勇也","论语·为政","喜欢是义，不敢加是无勇。加了可能被拒，不加一定后悔。","Liking is righteous; not adding is cowardice. Added, you might be rejected; not added, you'll certainly regret.","勇是加，悔是不加","Courage is adding; regret is not",1],
+["朋友总跟我抱怨公司听得很累","君子之交淡若水，小人之交甘若醴","庄子·山木","君子之交像水，淡但长久；小人之交像甜酒，甜但易腻。听抱怨是醴，适当抽离是水。","Noble friendship is like water—plain but lasting. Listening to complaints is sweet wine; stepping back is water.","听是醴，抽离是水","Listening is sweet wine; distance is water",1],
+["老朋友渐行渐远心里难过","泉涸，鱼相与处于陆，相呴以湿，相濡以沫，不如相忘于江湖","庄子·大宗师","两条鱼用唾沫互相湿润，不如在江湖里互相忘记。有些人相忘于江湖，不是遗憾，是自然。","Two fish moistening each other with spit is painful kindness. Better to forget each other in the vast river—it's not loss, it's nature.","相忘于江湖，不是遗憾","Forgetting in the river isn't loss—it's nature",1],
+["总觉得别人在背后议论我","举世誉之而不加劝，举世非之而不加沮","庄子·逍遥游","全世界夸你你不多做，全世界骂你你不少做。你的价值不在别人的嘴里。","Praised by the world, you don't try harder; condemned, you don't wilt. Your worth isn't in others' mouths.","价值在己，不在人言","Your worth is yours, not others' words",1],
+["微信被人拉黑很受伤","来而不往，亦非礼也","礼记·曲礼","不是每个人都需要走进你的生活，离开也是一种礼物。把被删除的页面关掉，你还有新的一页。","Not everyone belongs in your life. Departure can be a gift. Close the deleted page; you have new ones waiting.","拉黑是别人的，平静是你的","Being blocked is theirs; peace is yours",1],
+["女友/男友老是翻旧账","往者不可谏，来者犹可追","论语·微子","旧账像翻旧报纸，翻不出新日子。对TA说：过去的报纸我已经回收了，今天我们读新的一页。","Old accounts are yesterday's newspapers. Say: I've recycled those pages. Let's read today's together.","旧账是报纸，今天是新页","Old accounts are old papers; today is a fresh page",1],
+["亲戚总拿我和别人比较","以道观之，物无贵贱","庄子·秋水","比较是亲戚的尺子，你用道的眼光看，万物平等。你不需要活在别人的坐标系里。","Comparison is their ruler. Through the Tao, all things are equal. You don't need to live in anyone else's grid.","尺子是别人的，坐标是自己的","Their ruler; your coordinates",1],
+["觉得自己社交能力差很自卑","大音希声，大象无形","道德经·第四十一章","最好的音乐听不见，最大的形象看不清。安静的人往往最有力量，不必强迫自己变成话痨。","The greatest sound is silent; the greatest form is invisible. Quiet people often have the most power—don't force yourself to be chatty.","安静是力量，不是缺陷","Silence is power, not a flaw",1],
+["总担心未来睡不着","死生，命也；其有夜旦之常，天也","庄子·大宗师","生死都天天在，未来只是未到的现在。睡好今天的觉，就是给未来最好的准备。","Life and death come daily; the future is just a not-yet-arrived now. Sleep well tonight—that's the best preparation.","未来是未到的现在","The future is the not-yet now",2],
+["后悔过去的事反复想","往者不可谏，来者犹可追","论语·微子","过去的像泼出去的水追不回，未来的像田里的苗还能种。别盯着水，去种苗。","The past is spilled water; the future is a field to sow. Stop staring at water—start planting.","过去是水，未来是苗","Past is water; future is seeds",2],
+["觉得自己不如别人自卑","人法地，地法天，天法道，道法自然","道德经·第二十五章","海比河大，但河有河的美。你不是海，你是你自己的川。","The sea is bigger than the river, but the river has its own beauty. You are not the sea; you are your own stream.","你是川，不是海","You're a stream, not the sea",2],
+["怕别人不喜欢我","善者吾善之，不善者吾亦善之","道德经·第四十九章","喜欢我的人我善待，不喜欢我的人我也善待。不是讨好，是我本善。","Those who like me I treat well; those who don't I treat well too. Not to please—because kindness is who I am.","喜欢是他的事，善是我的事","Liking is theirs; kindness is mine",2],
+["吃饭也焦虑总是吃不好","忘足，履之适也；忘要，带之适也","庄子·达生","脚忘了鞋，鞋才舒服；腰忘了带，带才舒服。你忘了焦虑，饭才香。","When feet forget the shoes, shoes fit. When you forget anxiety, food tastes good.","忘焦虑，饭自香","Forget anxiety; food becomes fragrant",2],
+["总觉得自己做错事","过而不改，是谓过矣","论语·卫灵公","错了就改，别怕改。怕改的错才是真错，改了的错是经验。","Mistakes corrected are no longer mistakes. The real mistake is being afraid to correct them.","错是经验，怕改是真错","Mistakes are lessons; fear of correction is the real error",2],
+["看到别人优秀心里酸","直木先伐，甘井先竭","庄子·山木","优秀的树先被砍，甜的井先被喝。你酸的不是优秀，是先伐。","The straightest tree is cut first; the sweetest well is drained first. You're not envious of excellence—you're wary of being targeted.","酸的是先伐，不是优秀","Envying the cutting, not the excellence",2],
+["总担心生病疑神疑鬼","出生入死，生之徒十有三","道德经·第五十章","人从生到死本来就有风险。担心不会减少风险，只会减少快乐。","Risk is built into living. Worrying doesn't reduce risk—it only reduces joy.","担心不减少风险，只减少快乐","Worry reduces joy, not risk",2],
+["觉得自己一事无成","有实而无乎处者，宇也；有长而无本剽者，宙也","庄子·庚桑楚","宇宙有实无界，有时间无始终。现在的无成只是宇宙里的一粒尘，不是全部。","The universe has substance without boundary, time without beginning. Your current failures are just dust in the cosmos—not everything.","无成是尘，不是宇宙","Failure is dust, not the universe",2],
+["为小事烦躁不安","一箪食，一瓢饮，在陋巷，人不堪其忧，回也不改其乐","论语·雍也","颜回的箪食瓢饮是小事，你的堵车迟到也是小事。小事像灰尘，擦掉就好。","Yan Hui's simple meals were small things; your traffic jams are too. Small things are like dust—wipe them away.","小事是尘，擦掉就好","Small things are dust; wipe and move on",2],
+["觉得孤独没人理解","相呴以湿，相濡以沫，不如相忘于江湖","庄子·大宗师","两条鱼在陆地上用唾沫互相湿润，不如在江湖里互相忘记。孤独时先学会和自己相忘。","Two stranded fish moistening each other with spit—better to forget in the river. In loneliness, learn to forget yourself first.","孤独是江湖，不是陆地","Loneliness is the river, not the shore",2],
+["总觉得自己不够努力","希言自然，故飘风不终朝","道德经·第二十三章","狂风不会刮一早上，努力也不用每天狂风。偶尔慢下来，是自然。","Storms don't last all morning. You don't need to storm every day. Slowing down sometimes is natural.","努力不是狂风，是常风","Effort isn't a storm; it's a steady breeze",2],
+["被人否定怀疑自己","举世誉之而不加劝，举世非之而不加沮","庄子·逍遥游","全世界夸你你不多做，全世界骂你你不少做。你的价值不在别人的嘴里。","Praised by all, you don't try harder; condemned by all, you don't wilt. Your worth isn't spoken by others.","价值在己，不在人言","Worth is intrinsic, not spoken",2],
+["有时莫名想哭却没有理由","真者，精诚之至也。不精不诚，不能动人","庄子·渔父","想哭不需要理由，那是你灵魂在浇水。真正的精诚不是永远坚强，是允许自己脆弱。","Crying needs no reason—it's your soul watering itself. True sincerity isn't always being strong; it's allowing weakness.","想哭就哭，泪水也是精诚","Cry if you must; tears are also sincerity",2],
+["觉得自己性格不好","马蹄可以践霜雪，毛可以御风寒","庄子·马蹄","马蹄天生踩霜雪，马毛天生御风寒。你的性格天生有用，不用改，只需用对地方。","Hooves tread frost; fur shields cold. Your personality is born useful—don't change it, just apply it right.","性格是马蹄，用对地方就好","Personality is the hoof; use it right",2],
+["错过好机会很懊悔","反者道之动，弱者道之用","道德经·第四十章","道是循环的，错过的机会会反回来。现在没抓住，可能是弱用——下次更强。","The Tao cycles; missed chances return. Not seizing now may be weakness—but it readies strength for next time.","错过是反，下次是动","Missing is the return; next time is the motion",2],
+["总觉得自己运气差","知其不可奈何而安之若命","庄子·人间世","运气像天气，有晴有雨。你改变不了天气，但可以改变心情。安之若命，就是好运气。","Luck is weather—sun and rain. You can't change the weather, but you can change your mood. Accepting fate peacefully is good luck.","运气是天气，心情是自己","Luck is weather; mood is yours",2],
+["接收到别人的坏情绪很难受","非礼勿视，非礼勿听，非礼勿言，非礼勿动","论语·颜渊","别人的坏情绪是非礼，不看、不听、不说、不动，就是最好的保护。","Others' bad moods are improper—don't look, don't listen, don't speak, don't engage. That's the best protection.","坏情绪是非礼，不接就是礼","Bad moods are improper; not receiving them is proper",2],
+["总觉得自己活得太累","纯粹而不杂，静一而不变","庄子·刻意","累是因为杂，不累是因为纯。砍掉不必要的社交、欲望，回到纯粹。","Exhaustion comes from clutter; ease from purity. Cut unnecessary socializing and desires. Return to simplicity.","累是杂，纯是静","Exhaustion is clutter; purity is peace",2],
+["总担心老去很恐惧","吾生也有涯，而知也无涯","庄子·养生主","养生像种树，年轻时啬（积蓄），老了才有果。现在开始存健康不算晚。","Nurturing life is like growing a tree—save up when young to bear fruit when old. It's never too late to start.","老是果，现在是啬","Old age is the fruit; now is the planting",2],
+["找不到人生意义很空虚","独与天地精神往来","庄子·天下","意义不是别人给的，是自己和天地往来。看一朵花，听一阵风，就是意义。","Meaning isn't given by others—it's communion with heaven and earth. Watching a flower, hearing a breeze—that's meaning enough.","意义是往来，不是给","Meaning is communion, not assignment",2],
+["害怕孤独终老","德不孤，必有邻","论语·里仁","有德者不会孤独，真正的邻居是精神上的。你若盛开，蝴蝶自来。","The virtuous are never alone. True neighbors are spiritual. Blossom, and butterflies will come.","德不孤，蝴蝶自来","Virtue attracts companions; bloom and they come",2],
+["觉得努力没有回报想放弃","不积跬步，无以至千里","荀子·劝学","千里路是一步一步走出来的，你看不见终点是因为离得太近。低头走好每一步，抬头时已经过万重山。","A thousand miles is made of single steps. You can't see the end because you're too close. Walk each step well.","走好每一步，抬头已千里","Walk each step; look up and you've gone far",2],
+["被最信任的人背叛很痛苦","不逆诈，不亿不信，抑亦先觉者，是贤乎","论语·宪问","不预先怀疑别人欺诈，但一旦发现，要有先觉的智慧。被骗不是你的错，继续信任才是你的勇气。","Don't pre-suspect deceit—but discern it when it comes. Being betrayed isn't your fault; continuing to trust is your courage.","被骗不是错，继续信是勇","Betrayal isn't your fault; trusting again is courage",2],
+["觉得自己脾气暴躁控制不住","忿思难","论语·季氏","发怒之前想后果。那把火最先烧的是你自己。深呼吸十秒，让怒气散一散。","Before anger, think of consequences. The fire burns you first. Breathe ten seconds; let it dissipate.","怒火先烧己，深呼吸再决定","Anger burns you first; breathe before deciding",2],
+["父母催婚怎么应对","马蹄可以践霜雪，毛可以御风寒","庄子·马蹄","马有马的活法，人有人的节奏。父母的催是霜雪，你的节奏是毛——天生就能御寒。","Horses have their way; people have their rhythm. Parents' pressure is frost; your rhythm is fur—born to withstand the cold.","催是霜雪，节奏是毛","Pressure is frost; your rhythm is fur",3],
+["对父母态度不好很愧疚","色难。有事弟子服其劳，有酒食先生馔，曾是以为孝乎","论语·为政","对父母和颜悦色最难。先改脸色，再改沟通。","A pleasant face toward parents is the hardest. Fix your expression first, then your words.","沟通先改色，再改话","Fix your face before your words",3],
+["不知道如何表达对家人的关心","天下之至柔，驰骋天下之至坚","道德经·第四十三章","关心不是说，是柔。一个拥抱比十句我关心你有用。","Care isn't spoken—it's gentle. One hug beats ten verbal expressions of concern.","关心是柔，不是说","Care is gentleness, not words",3],
+["怎么和强势的父母相处","形莫若就，心莫若和","庄子·山木","表面听（形就），心里守（心和）。不对抗不盲从，就是最好的边界。","Listen on the surface, but guard your heart. Don't fight or blindly follow—that's the best boundary.","听是就，守是和","Listening is yielding; guarding is harmony",3],
+["孩子不听话很头疼","其身正，不令而行；其身不正，虽令不从","论语·子路","你正，孩子自然正；你不正，逼他也没用。先当正的父母，再当管的父母。","If you're upright, children follow without orders. Fix yourself before fixing them.","正己，才能正孩子","Rectify yourself to guide your child",3],
+["夫妻间总是互相挑剔","以道观之，物无贵贱","庄子·秋水","用道看，你和别人都一样；用配偶的尺子看，你永远不够好。扔掉尺子，抱抱他。","Through the Tao, all are equal. Through your spouse's ruler, you're never enough. Drop the ruler and hug.","尺子是他的，拥抱是你的","The ruler is theirs; the embrace is yours",3],
+["父母说为你好让我很窒息","其耆欲深者，其天机浅","庄子·大宗师","忌讳越多，人越贫乏。为你好越多，你越不自由。温和说我知道，但我要自己的好。","More taboos make a poorer person. More 'for your own good' means less freedom. Gently say: I know, but I want my own good.","为你好是忌讳，自由是你的事","Their good is their taboo; freedom is yours",3],
+["无法摆脱原生家庭的影响","物无非彼，物无非是","庄子·齐物论","你的彼是过去，孩子的是是现在。别用自己的是绑孩子的彼。","Their 'that' is the past; your 'this' is the present. Don't bind your present with their past.","彼是过去，是是现在","That is past; this is now",3],
+["怎么教育孩子才不焦虑","重为轻根，静为躁君","道德经·第二十六章","先责自己：我有没有好好陪他？再责他。先厚己，再薄人。","First reproach yourself: have I spent quality time? Then guide them. Enrich yourself before correcting others.","先厚己，再薄责","Enrich yourself before light reproach",3],
+["想让父母过得好但他们总省钱","缘督以为经","庄子·养生主","父母的督是省钱，你的督是让他们开心。偶尔给他们买件贵衣服，就是经。","Parents' principle is saving; yours is their joy. Occasionally buying them something nice is the middle way.","省钱是他们的督，开心是你的经","Saving is their way; joy is your path",3],
+["孩子总玩游戏不学习","将欲取之，必固与之","道德经·第二十九章","想让孩子取学习，先与他游戏时间。约定玩1小时学2小时，比硬堵有用。","Want them to learn? First give them play. Agree on 1 hour play, 2 hours study. Better than blocking.","取学习，先与游戏","To gain study, first give play",3],
+["和兄弟姐妹争家产关系破裂","货悖而入者，亦悖而出","大学","靠手段拿来的东西，也会以同样方式失去。争来的家产，最终会让你失去的更多。","What comes improperly will leave the same way. Inheritances fought for will cost you more than they're worth.","争来的是货，失去的是情","What's fought for is goods; what's lost is love",3],
+["老婆问我妈和她掉河里先救谁","执其两端，用其中于民","中庸","先救妈是孝，先救妻是爱。中庸之道不是选一个，是先教会她们游泳。","Saving mom is filial; saving wife is love. The middle way isn't choosing—it's teaching both to swim.","执两用中，不如教会游泳","Between two, find the middle—or teach them to swim",3],
+["孩子问人为什么要努力","天行健，君子以自强不息","周易·乾卦","努力不是为了比别人强，是像天一样，每天自己转自己的。太阳不需要观众也会升起。","Effort isn't to surpass others—it's to revolve like heaven. The sun rises without needing an audience.","努力是天行健，不是为了观众","Effort is self-motion, not performance",3],
+["配偶总是沉默不沟通","大辩若讷","道德经·第四十五章","真正善辩的人好像口吃。沉默不一定是拒绝沟通，可能是在等你说第一句。","The truly eloquent seem tongue-tied. Silence isn't refusal—it might be waiting for you to speak first.","沉默是讷，开口是辩","Silence is stammer; speaking is eloquence",3],
+["想对父母说爱你说不出口","大音希声","道德经·第四十一章","最好的音乐听不见，最深的爱不在嘴上。给妈妈倒杯水，比说一万句我爱你实在。","The greatest music is silent; the deepest love isn't spoken. Pouring mom a glass of water beats ten thousand 'I love you's.","大爱希声，倒杯水就行","Greatest love is silent; just pour some water",3],
+["父母老了总记不住事很烦","老吾老以及人之老","孟子·梁惠王","他们记不住昨天吃了什么，但永远记得你小时候最爱吃什么。耐心是给他们最好的药。","They forget yesterday's meal but always remember your childhood favorite. Patience is the best medicine you can give them.","记不住昨天，记得住你","They forget yesterday but remember you",3],
+["父母总拿我当小孩","父母在，不远游，游必有方","论语·里仁","不远游是古方，游必有方是今方。告诉父母我有方——方向和方法——他们会放心的。","In ancient times, stay close. Today: tell them you have direction. They'll rest easy knowing you have a plan.","有方就是成人","Having a direction makes you an adult",3],
+["再婚家庭孩子相处不好","君子和而不同，小人同而不和","论语·子路","和而不同——你可以跟他们不一样，但还是能和睦相处。不需要强求变成一家人，先做朋友。","Harmony without sameness. You can be different and still get along. Don't force family—start with friendship.","和而不同，先做朋友","Harmony in difference; start as friends",3],
+["父母离婚孩子问为什么","逝者如斯夫，不舍昼夜","论语·子罕","河水昼夜不停地流，有些事没有谁对谁错，只是流到了分叉口。你永远是他们汇合的支流。","The river flows day and night. Some things aren't about right and wrong—they just reach a fork. You remain where they converge.","没有对错的河水，只有分叉的流向","No right or wrong in the river; just branching streams",3],
+["想学新技能又怕学不会","适莽苍者，三餐而反，腹犹果然","庄子·逍遥游","去近郊的人带三餐就够。学新技能像去近郊，不用怕带不够，先出发。","A short trip needs only three meals. Learning a new skill is a short trip—don't fear packing too little; just depart.","学技能是去近郊，先出发","Learning is a short trip; just set out",4],
+["总半途而废坚持不下去","譬如为山，未成一篑，止，吾止也","论语·子罕","堆山差一筐土停下，是你自己停的。别怪难，怪止。","A mountain one basket short—you stopped yourself. Don't blame the difficulty; blame the stopping.","半途是止，不是难","Midway is stopping, not hardness",4],
+["想读书但总读不进去","巧者劳而知者忧，无能者无所求","庄子·列御寇","读书不是巧，是知。读不进去时先读无用的书，比如庄子。","Reading isn't skill—it's wisdom. When you can't focus, read something useless, like Zhuangzi.","读不进去是巧，读无用是知","Can't read? Try something useless for wisdom",4],
+["总觉得自己没进步","反者道之动","道德经·第四十章","进步像道，是反的。你觉得没进步，可能是在积累，等反的那天。","Progress is like the Tao—it moves in cycles. Feeling stuck might mean you're accumulating for the rebound.","没进步是积累，进步是反","No progress is accumulation; progress is the return",4],
+["想减肥但控制不住吃","吾生也有涯，而知也无涯","庄子·养生主","生命有涯，食欲更有涯。减肥不是戒吃，是知止。吃到七分饱就是知。","Life is limited; appetite even more so. Losing weight isn't abstaining—it's knowing when to stop. Seven-tenths full is wisdom.","减肥是知止，不是戒吃","Weight loss is knowing when to stop",4],
+["总羡慕别人的生活","贤哉回也，一箪食，一瓢饮，在陋巷","论语·雍也","颜回的生活你羡慕吗？不羡慕，但你羡慕别人的表面。回到自己的箪食瓢饮，就是贤。","Do you envy Yan Hui's simple life? No—you envy others' surfaces. Return to your own simple bowl; that's virtue.","羡慕是表面，贤是内在","Envy is surface; virtue is inward",4],
+["想早起但总起不来","万物皆出于机，皆入于机","庄子·至乐","早起像机，你不起它就入。前一晚把手机放远，就是出机。","Waking early is a pivot—miss it, it passes. Put your phone far away the night before—that's seizing the chance.","早起是出机，赖床是入机","Waking is seizing; lying in is missing",4],
+["总觉得自己没目标","人法地，地法天，天法道，道法自然","道德经·第二十五章","目标不是找来的，是法自然来的。先做好眼前的事，目标会自己出来。","Goals aren't found—they follow nature. Do today's work well, and goals will emerge.","目标是自然，不是找","Goals follow nature; they aren't hunted",4],
+["写作找不到灵感","寓言十九，重言十七，卮言日出","庄子·寓言","写作像卮言，自然流露。别想写得好，先写真。","Writing is like daily speech—let it flow naturally. Don't aim for 'good'; aim for 'true' first.","写作是卮言，不是寓言","Writing is natural speech, not crafted fable",4],
+["总怕失败不敢尝试","见义不为，无勇也","论语·为政","尝试是义，不敢是无勇。失败了是经验，不敢是遗憾。","Attempting is righteous; fear is cowardice. Failure is experience; hesitation is regret.","尝试是勇，不敢是憾","Attempt is courage; fear is regret",4],
+["觉得自己没天赋","用志不分，乃凝于神","庄子·达生","天赋是神，专注是凝。每天练10分钟比有天赋有用。","Talent is spirit; focus is condensation. Practicing 10 minutes daily beats 'having talent.'","天赋是神，专注是凝","Talent is spirit; focus condenses it",4],
+["总觉得自己太浮躁","致虚极，守静笃","道德经·第十六章","浮躁是不虚不静，静下来是守静笃。每天坐5分钟什么都不想，就是致虚。","Restlessness is lack of emptiness. Sit 5 minutes daily thinking nothing—that's reaching emptiness.","浮躁是不静，静是笃","Restlessness is noise; stillness is depth",4],
+["想旅行但总没时间","井蛙不可以语于海者，拘于虚也","庄子·秋水","你的虚是工作家务，旅行的海是远方。砍掉一个虚，就能去海。","Your limitations are work and chores; travel is the sea. Cut one limitation to reach the sea.","没时间是虚，旅行是海","No time is limitation; travel is the sea",4],
+["总觉得自己不自律","其身正，不令而行","论语·子路","自律不是令，是正。先正一件小事比如早起，其他事自然正。","Self-discipline isn't command—it's alignment. Fix one small thing like waking early; the rest follows.","自律是正，不是令","Discipline is alignment, not orders",4],
+["想学画画但画得不好","马蹄可以践霜雪，毛可以御风寒","庄子·马蹄","画得不好是霜雪，坚持画是毛。毛会慢慢长厚，画会慢慢变好。","Bad drawings are frost; persistence is fur. Fur thickens with time; art improves with practice.","画不好是霜雪，坚持是毛","Bad art is frost; persistence is fur",4],
+["收到差评很打击","善者吾善之，不善者吾亦善之","道德经·第四十九章","评价是别人的，善是你的。别人说你不好，你也善——善待自己。","Criticism is others'; kindness is yours. Even when criticized, be kind—to yourself.","评价是别人的，善是你的","Judgment is theirs; kindness is yours",4],
+["想学编程但太难了","庖丁解牛，因其固然","庄子·养生主","编程像解牛，顺着固然（逻辑）来。先学一个小功能再学大的，就是因其固然。","Coding is like butchering an ox—follow its natural lines. Learn one small function at a time; that's following nature.","编程是牛，逻辑是固然","Coding is the ox; logic is its structure",4],
+["考研/考公一直失败","岁寒，然后知松柏之后凋也","论语·子罕","天冷了才知道松树最后落叶。失败不是结束，是考验你是不是松柏。","Only in winter do we know the pine stays green. Failure tests whether you're a pine or just another leaf.","岁寒知松柏，失败知坚韧","Winter reveals the pine; failure reveals resilience",4],
+["想自学但不知道该学什么","博学之，审问之，慎思之，明辨之，笃行之","中庸","不知道学什么的时候，先博学——广泛了解。然后再问、再思、再辨、再行。","When you don't know what to study, first learn broadly. Then question, reflect, discern, and act.","先博学，再问思辨行","First learn broadly; then question, think, discern, act",4],
+["总想买新手机旧的不坏","鹪鹩巢于深林，不过一枝","庄子·逍遥游","手机像鹪鹩的巢，只需要一枝，不是最新款。旧的能用，就是一枝。","A phone is like a wren's nest—you only need one branch. If the old one works, it's enough.","手机是一枝，不是森林","A phone is one branch, not the forest",5],
+["忍不住网购快递堆成山","名与身孰亲？身与货孰多","道德经·第四十四章","快递是货，你的身是身体和心情。货多了身累了，不值。","Packages are goods; your body and peace are more dear. Too many goods, too tired a self—not worth it.","货是多，身是亲","Goods are many; body is dear",5],
+["想存钱但总存不下","克己复礼为仁","论语·颜渊","存钱是克己（克制欲望），复礼是回到合理消费。先砍掉一个不必要就能存下。","Saving is self-restraint; returning to sensible spending. Cut one unnecessary expense to start saving.","存钱是克己，不是苦己","Saving is restraint, not suffering",5],
+["想买豪车撑面子","以道观之，物无贵贱","庄子·秋水","豪车是贵，代步车是贱？用道看，都是车，都是载你到目的地的工具。","Is a luxury car noble, a beater car lowly? Through the Tao, both are just vehicles taking you places.","车是工具，不是贵贱","Cars are tools, not status",5],
+["想投资但怕亏钱","缘督以为经","庄子·养生主","投资像缘督，找中间的经（规律）。不懂的不投，就是缘督。","Investing is finding the middle path. Don't invest in what you don't understand—that's the middle way.","投资是缘督，不懂是冒险","Investing is the middle way; ignorance is risk",5],
+["被直播带货忽悠买东西","五色令目盲，五音令耳聋","道德经·第十二章","直播的五色五音让你盲目。关掉直播冷静一天再买，就是不盲。","Livestreams' flashy colors and sounds blind you. Turn it off, cool down for a day—that's clarity.","直播是五色，冷静是不盲","Streams are dazzling; calm is clarity",5],
+["想买奢侈品撑面子","衣敝缊袍，与衣狐貉者立，而不耻者，其由也与","论语·子罕","穿破袍子和穿狐貉的人站一起不羞耻的是子路。面子是狐貉，底气是破袍子里的自己。","Standing in rags beside someone in furs without shame—that's courage. Face is the fur; confidence is the rags.","面子是狐貉，底气是破袍子","Face is fur; confidence is the worn robe",5],
+["总焦虑钱不够用","天下之所尊者，富贵寿善也","庄子·至乐","天下人尊崇富贵，但你焦虑的是不够。其实够是知足，不是数字。","Everyone worships wealth and longevity. But 'enough' is contentment, not a number.","够是知足，不是数字","Enough is contentment, not digits",5],
+["想提前消费办信用卡","治人事天，莫若啬","道德经·第五十九章","提前消费是奢，啬是积蓄。先攒够再买比提前消费安心。","Spending ahead is extravagance; saving is nurturing. Buy only when you've saved enough.","提前消费是奢，攒钱是啬","Pre-spending is excess; saving is nurture",5],
+["总想请客吃饭撑场面","君子之交淡若水，小人之交甘若醴","庄子·山木","请客像醴，淡了就没味；君子之交像水，淡但长久。偶尔请别总请。","Wining and dining is sweet wine—quickly bland. Noble friendship is water—plain but lasting. Treat occasionally, not always.","请客是醴，交情是水","Hosting is sweet wine; friendship is water",5],
+["纠结买不买学区房","贤哉回也，一箪食，一瓢饮，在陋巷","论语·雍也","颜回的陋巷是学区房吗？不是，但他的贤是。孩子的学区是父母的贤，不是房子。","Yan Hui's alley wasn't a school district—but his virtue was. A child's true education is a parent's character, not the address.","学区是贤，不是房","School district is virtue, not real estate",5],
+["总被推销保险不知道买不买","形莫若就，心莫若和","庄子·人间世","推销员的话就（听），但心不和（不盲从）。先研究清楚再决定，就是和。","Listen to the sales pitch, but don't let it sway your heart. Research thoroughly before deciding.","推销是就，研究是和","Sales pitch is listening; research is harmony",5],
+["想创业但怕赔钱","屯，刚柔始交而难生","周易·屯卦","创业像屯，难是必然的。赔钱是难，学到的是刚柔交。","Starting a business is difficulty at the beginning. Losing money is the difficulty; learning is the value gained.","赔钱是难，学到是交","Loss is difficulty; learning is the gain",5],
+["总羡慕别人有钱嫉妒","物无非彼，物无非是","庄子·齐物论","别人的钱是彼，你的生活是是。别用彼换是，不值。","Their money is 'that'; your life is 'this.' Don't trade your 'this' for their 'that'—it's not worth it.","钱是彼，生活是是","Money is theirs; life is yours",5],
+["想学理财但看不懂书","反者道之动，弱者道之用","道德经·第四十章","理财的道是反（循环）。先学存钱，再学投资，就是道之动。","Finance follows the Tao's cycles. Learn saving first, then investing—that's the Tao in motion.","理财是道，存钱是动","Finance is the Tao; saving is motion",5],
+["股票大跌心痛怎么办","知止不殆，可以长久","道德经·第四十四章","知道止损就不会有大危险。跌了不要补仓，先停下来看看风往哪吹。","Knowing when to stop prevents disaster. When it drops, don't double down—pause and see which way the wind blows.","知止不殆，先停再看","Know when to stop; pause before acting",5],
+["总熬夜刷手机睡不够","人之生也，与忧俱生","庄子·至乐","熬夜是忧（焦虑、无聊），睡眠是生。别让忧占了生的时间。","Staying up is anxiety; sleep is life. Don't let anxiety occupy life's time.","熬夜是忧，睡眠是生","Late nights are worry; sleep is life",6],
+["总吃外卖胃不好","生之徒十有三，死之徒十有三","道德经·第五十章","胃是生之徒，外卖是死之徒。少点一次外卖就是给生之徒加一分。","Your stomach belongs to life; takeout belongs to death. Order one less takeout—add one point to life.","外卖是死之徒，家常饭是生之徒","Takeout is death's companion; home cooking is life's",6],
+["总久坐颈椎疼","用志不分，乃凝于神","庄子·达生","久坐是志分（注意力在屏幕），颈椎疼是神不凝。每小时起来走2分钟就是凝神。","Sitting long scatters focus; neck pain is scattered spirit. Walk 2 minutes every hour—that's re-concentrating spirit.","久坐是志分，走动是凝神","Sitting scatters; walking gathers",6],
+["动不动就生气对身体不好","不迁怒，不贰过","论语·雍也","生气是迁怒（把别人的错怪到自己身上），疾病是贰过（重复生气）。不迁怒就是不贰过。","Anger is shifting blame onto yourself; illness is repeating that anger. Don't shift blame—don't repeat mistakes.","生气是迁怒，不气是不贰过","Anger is blame-shifting; calm is non-repetition",6],
+["总失眠数羊没用","古之真人，其寝不梦，其觉无忧","庄子·大宗师","真人睡觉不做梦，醒来不忧愁。睡前别想明天的事，就是真人的开始。","True sages sleep without dreams, wake without worry. Stop thinking about tomorrow before bed—that's the start of sagehood.","失眠是梦，不忧是真人","Insomnia is dreaming; worry-free is sagehood",6],
+["吃保健品怕没用","五味令人口爽，五色令人目盲","道德经·第十二章","保健品是五味，吃多了口爽（味觉失灵）。好好吃饭比保健品有用。","Supplements are excess flavors—too many dull the senses. Eating well beats any supplement.","保健品是五味，吃饭是爽","Supplements are excess; eating well is true nourishment",6],
+["去健身房总是坚持不下来","吾生也有涯，而知也无涯","庄子·养生主","健身是知，坚持是涯。别追求每天2小时，先追求每周3次30分钟，就是有涯。","Fitness is knowledge; persistence has limits. Don't aim for 2 hours daily—aim for 3×30 minutes weekly. That's knowing your limits.","健身是知，坚持是涯","Fitness is knowledge; persistence respects limits",6],
+["总怕老拼命护肤","人生天地之间，若白驹之过隙，忽然而已","庄子·知北游","衰老像白驹过隙挡不住。护肤是擦缝隙，接受衰老是顺缝隙。","Aging is a white colt flashing past a crack—unstoppable. Skincare is rubbing the crack; acceptance is flowing with it.","护肤是擦缝隙，接受是顺缝隙","Skincare rubs the crack; acceptance flows with it",6],
+["总喝奶茶戒不掉","譬如为山，未成一篑，止，吾止也","论语·子罕","戒奶茶像为山，差一杯就成。今天少喝一杯，就是成山的一步。","Quitting bubble tea is like building a mountain—one cup short. Skip one cup today; that's your mountain's next basket.","奶茶是一篑，少喝是成山","Bubble tea is one basket; skipping it builds the mountain",6],
+["腰酸背痛以为是累的","形劳而不休则弊，精用而不已则劳","庄子·刻意","腰酸是形劳不休，背痛是精用不已。每天留10分钟不劳不休，就是不弊不劳。","Body aches from ceaseless labor; back pain from endless mental drain. Give yourself 10 minutes of true rest daily.","酸痛是弊劳，休息是不弊","Ache is overwork; rest is renewal",6],
+["依赖安眠药才能入睡","天下之至柔，驰骋天下之至坚","道德经·第四十三章","安眠药是坚，放松是柔。睡前听10分钟白噪音，比药柔，更能驰骋失眠。","Sleeping pills are hard force; relaxation is soft power. 10 minutes of white noise beats the pill—softness overcomes hardness.","安眠药是坚，放松是柔","Pills are hard; relaxation is soft and conquers",6]
+["总躺着刷手机起不来","君子以向晦入宴息","周易·随卦","天黑了就该休息，天亮了就该活动。手机玩到天亮不是休息，是颠倒昼夜。","Rest when it's dark; rise when it's light. Scrolling till dawn isn't rest—it's reversed living.","向晦宴息，天亮即起","Rest at dusk; rise at dawn",6],
+["早上起不来总迟到","朝闻道，夕死可矣","论语·里仁","把这句话放进闹钟：早上闻道，晚上才死——那你今天至少要爬起来闻一个道。","Put this in your alarm: hear the truth at dawn, die at dusk—so at least get up to hear one truth today.","早起闻道","Rise to hear the truth",4],
+["感觉每天在重复一样的日子","周虽旧邦，其命维新","诗经·大雅·文王","日子虽旧，但每天的你都是新的。在重复中找到一处不同，就是你的维新。","Days may be old, but each day you are new. Find one difference in repetition—that's your renewal.","日子是旧邦，你是维新","Days are the old kingdom; you are the renewal",4],
+["觉得做人太累想躺平","夫大块载我以形，劳我以生，佚我以老，息我以死","庄子·大宗师","天地给你身体是让你劳作，给你老年是让你安逸，给你死亡是让你休息。躺平可以，但别错过中间的风景。","Nature gave you form to labor, old age to rest, death to sleep. Rest is fine—just don't miss the scenery in between.","躺平是佚老，别错过劳作中的风景","Rest is for old age; don't miss the journey",2],
+["整天拖延什么事都做不完","明日复明日，明日何其多","明日歌·钱福","拖延不是懒，是你对那件事的恐惧。把大象切成一百块，每天吃一口。","Procrastination isn't laziness—it's fear. Slice the elephant into a hundred pieces; eat one bite daily.","拖延是恐惧，分解是解药","Procrastination is fear; breaking it down is the cure",4],
+["和父母观点总是不合","君子和而不同，小人同而不和","论语·子路","跟父母不需要完全一致，只需要和——态度温和、立场清晰。和而不同是成年人的体面。","You don't need to agree with parents—just be harmonious. Gentle attitude, clear position. That's adult dignity.","和而不同，温和坚定","Harmony without agreement; gentle but firm",3],
+["被老板PUA还要继续忍吗","小不忍则乱大谋","论语·卫灵公","忍不是为了跪着，是为了站着的时候更有力。但忍是手段不是目的，攒够资本就离开。","Endurance is a tool, not a destination. Tolerate to build capital—then leave standing tall.","忍是手段，走是目的","Endurance is the means; leaving is the end",0],
+["工作五年没有升职很迷茫","大器晚成","道德经·第四十一章","真正的大器都是晚成的。五年没升职可能是你还没烧够火候。好饭不怕晚。","Great vessels take time to form. Five years without promotion might mean you're still firing—good meals aren't afraid of being late.","大器晚成，火候不够接着烧","Great things take time; keep firing",0],
+["觉得自己没有核心竞争力","通于一而万事毕","庄子·天地","把一件事做到无人能替代，其他万事自然毕。宽度不如深度。","Master one thing beyond replacement, and everything else follows. Depth beats breadth.","通于一，则万事毕","Master one, and all follows",4],
+["被朋友放鸽子很生气","人不知而不愠，不亦君子乎","论语·学而","别人不理解你你不生气，别人放你鸽子你也不怒——这是真正的君子。下次约个更靠谱的人。","Not angered when misunderstood—that's a noble person. Not angered when stood up either. Next time, choose more reliable company.","不愠是君子，放鸽子是他的失","No anger is nobility; being stood up is their loss",1],
+["年会要表演节目很抗拒","邦有道，贫且贱焉，耻也；邦无道，富且贵焉，耻也","论语·泰伯","年会社恐不是耻，强迫你表演的公司文化才是耻。找个搭档、搞个简单的，面上过得去就行。","Stage fright isn't shameful; forcing performances is. Find a partner, keep it simple, and get through it.","社恐不是耻，强迫才是","No shame in fear; shame in coercion",0],
+["总是羡慕别人过得比我好","知足者富","道德经·第三十三章","知足的人才是真正的富人。你羡慕的人也在羡慕别人。比上不足比下有余是人间常态。","The contented are truly rich. Those you envy are envying others. Everyone is between someone above and someone below.","知足是真富","Contentment is true wealth",2],
+["面试时被问到缺点怎么答","知之为知之，不知为不知，是知也","论语·为政","诚实地说一个不影响核心能力的缺点，再加一句我正在改。这就是真正的智慧。","Honestly state a non-core weakness, then add: I'm working on it. That's true wisdom.","诚实是知，改进是智","Honesty is knowledge; improvement is wisdom",0],
+["想裸辞去旅行又怕回来找不到工作","知止不殆，可以长久","道德经·第四十四章","不是不能裸辞，是要知止——知道什么时候停。存够半年生活费再出发，回来还有余地。","You can quit—just know when to stop. Save six months' expenses before leaving; you'll have room when you return.","裸辞不是不行，存够再走","Quitting is fine; just save first",0],
+["孩子问为什么别人有的我没有","五色令人目盲，五音令人耳聋，五味令人口爽","道德经·第十二章","告诉孩子：过多的颜色让眼睛瞎，过多的声音让耳朵聋。不是越多越好，是刚好最好。","Tell them: too many colors blind; too many sounds deafen. More isn't better—just enough is best.","刚好最好","Just enough is best",3],
+["朋友失恋每天找我哭怎么办","哀矜而勿喜","论语·子张","同情他但不要跟着沉溺。听他说完，然后带他去吃顿好的——食物是治愈一切的良药。","Sympathize but don't drown with him. Listen, then take him for a good meal—food heals everything.","哀矜勿喜，带去吃饭","Feel sorry, don't revel; just take them to eat",1],
+["被同事造谣怎么办","流言止于智者","荀子·大略","谣言到你这就停了，因为你不动声色、不传不信。智者不是去澄清谣言，是不让它穿过你。","Rumors stop at the wise. Don't clarify or spread—just let them die at your doorstep.","谣言止于智者，不听不传","Rumors stop at the wise; don't hear, don't spread",0],
+["朋友圈发了没人点赞","人不知而不愠","论语·学而","你发朋友圈是为了记录生活，不是为了收集赞。别人不知道你的好，你不生气——孔子的初代社交哲学。","You post to record life, not collect likes. Others don't know your worth—don't be angry. Confucius's original social media philosophy.","不愠是初心，点赞是浮云","No anger is original intent; likes are fleeting clouds",1],
+["老婆翻我手机查聊天记录","君子坦荡荡，小人长戚戚","论语·述而","坦荡荡地把手机给她——不是证明你没问题，是证明你们的信任没问题。","Hand over your phone with an open heart—not to prove your innocence, but to reaffirm trust.","坦荡荡是信任，藏是戚戚","Openness is trust; hiding is anxiety",3],
+["看到朋友发朋友圈不叫我","己所不欲，勿施于人","论语·颜渊","你自己也有不叫朋友的时候。别把每张照片当成对你的否定。下次你组局叫他。","You've excluded friends too. Don't turn every photo into rejection. Next time, organize something and invite him.","己所不欲，勿施于己","Don't do to yourself what you wouldn't do to others",1],
+["被领导当众表扬反而尴尬","大音希声","道德经·第四十一章","最好的声音是无声。被表扬时微笑着说谢谢团队，光芒不刺眼才是高手。","The greatest sound is silence. When praised, smile and thank the team. True masters shine without blinding.","光芒不刺眼，谢谢团队","Shine without blinding; thank the team",0],
+["周末一个人在家觉得浪费生命","无用之用，方为大用","庄子·人间世","躺一天不是浪费——那是无用之用。充电、发呆、看云，都是生命必要的空白。","A day doing nothing isn't waste—it's the use of the useless. Recharging and staring at clouds are life's necessary blanks.","无用之用，空白也是生活","The use of the useless; emptiness is also living",2],
+["总害怕被时代抛弃跟不上潮流","为学日益，为道日损","道德经·第四十八章","学习是做加法，修道是做减法。跟上时代是益，不被裹挟是损。两个都要。","Learning adds; the Tao subtracts. Keeping up is adding; not being swept away is subtracting. You need both.","学要益，道要损","Learning adds; the Way subtracts",4],
+["被网络喷子骂了很难受","人不知而不愠","论语·学而","孔子两千年前就给出了解决方案：别人不理解你、骂你、喷你——别动气。喷子不知你，所以不愠。","Confucius solved this 2000 years ago: when misunderstood, insulted, trolled—don't get angry. Trolls don't know you, so don't be angry.","喷子不知你，所以不愠","Trolls don't know you; so don't be angry",2],
+["另一半忘记了纪念日","大音希声，大象无形","道德经·第四十一章","最大的声音是无声，最深的爱不在于仪式。记不记得日子不重要，平平淡淡才是真。","The greatest sound is silence; the deepest love isn't in rituals. Forgetting a date doesn't matter—quiet steadiness is real.","大爱希声，平淡是真","Great love is silent; steadiness is real",3],
+["总焦虑孩子成绩不好","有教无类","论语·卫灵公","孔子说有教无类——教育面前人人平等。分数只分一时，品格定人一生。","Education shouldn't discriminate. Grades classify temporarily; character defines a lifetime.","分数分一时，品格定一生","Grades are temporary; character is lifetime",3],
+["觉得自己太在意别人的眼光","举世誉之而不加劝，举世非之而不加沮","庄子·逍遥游","全世界夸你你也不会更努力，全世界骂你你也不会更消沉。你不需要全世界的点评。","Praised by the world, you don't work harder; condemned, you don't wilt. You don't need the world's reviews.","不需要全世界的点评","You don't need the world's reviews",2],
+["朋友聚会大家都在聊孩子我没得聊","子非鱼，安知鱼之乐","庄子·秋水","你不是鱼怎么知道鱼的快乐？你不是她们怎么知道聊孩子就是幸福？我聊我的书，各自快乐。","You're not a fish—how do you know its joy? You're not them—how do you know chatting about kids is bliss? I'll talk about books; each to their own joy.","各有各的鱼，各有各的乐","Each to their fish; each to their joy",1],
+["父母在亲戚面前总贬低我","爱之，能勿劳乎？忠焉，能勿诲乎","论语·宪问","贬低是他们的表达方式，背后是怕你骄傲、想让你更好。听一半，忘一半。","Disparagement is their love language—fear of you becoming arrogant, wanting you to be better. Hear half, forget half.","贬低是劳，背后是爱","Criticism is toil; behind it is love",3],
+["团队里有人摸鱼我要不要举报","不在其位，不谋其政","论语·泰伯","你不是管理者就不要操管理的心。做好自己的事，摸鱼的人自有天收。","If it's not your position, don't meddle in its affairs. Do your own work well; the universe handles slackers.","不在其位，不谋其政","Not your position, not your problem",0],
+["被客户骂了还不能还嘴","小不忍则乱大谋","论语·卫灵公","客户骂的不是你，是你的角色。把角色脱在工位上，回家你还是你。","Clients curse the role, not you. Leave the role at your desk; at home, you're still you.","骂的是角色，不是你","They curse the role, not you",0],
+["新来的同事能力比我强压力很大","三人行，必有我师焉","论语·述而","三个人走路必有一个是你老师。新同事是你的免费私教，跟他学，然后超越他。","Among three walkers, one is your teacher. The new colleague is your free coach—learn from them, then surpass.","新同事是私教，不是对手","New colleague is a coach, not a rival",0],
+["感觉自己心理出问题了不敢去看","知耻近乎勇","中庸","敢于直面自己的脆弱才是真正的勇。看心理咨询不是耻辱，是勇敢。","Facing your vulnerability is true courage. Seeing a therapist isn't shameful—it's bravery.","知耻是勇，求助不是弱","Awareness of weakness is courage; seeking help isn't weakness",2],
+["被朋友开玩笑开过头了","过犹不及","论语·先进","玩笑过了头就不是玩笑了。正面告诉他'这个玩笑我不舒服'，不失礼也不失己。","A joke gone too far is no longer a joke. Tell them directly: 'That makes me uncomfortable.' Lose neither manners nor self.","玩笑有度，过了就不笑","Jokes have limits; beyond them, they're not funny",1],
+["孩子说要当网红不想读书","苗而不秀者有矣夫，秀而不实者有矣夫","论语·子罕","有苗不开花，有花不结果。想做网红可以，但先把根扎深——不读书的网红终究是昙花一现。","Some sprouts never bloom; some blooms never bear fruit. Want to be a creator? First sink deep roots—uneducated fame is a flash in the pan.","读书是根，网红是花","Reading is root; fame is flower",3],
+["想坚持一个好习惯总是三天热度","有恒产者有恒心","孟子·滕文公","恒产不是钱，是你给自己建立的小系统。每天固定时间做同一件事，系统会自动推着你走。","Stability isn't wealth—it's the small system you build. Do it at the same time daily; the system carries you.","建立系统，让系统推你","Build a system; let it carry you",4],
+["丧偶后走不出来很痛苦","死生亦大矣，而不得与之变","庄子·德充符","死生是大事，但你的生活还要继续。带着TA的爱走下去，就是对TA最好的纪念。","Life and death are great matters, but your life must continue. Walk forward carrying their love—that's the best memorial.","带着爱走下去是纪念","Walk on with love as memorial",2],
+["对自己要求太高总是自我攻击","大成若缺，其用不弊","道德经·第四十五章","最大的成就是有缺憾的，但它的用处不会衰竭。你不需要完美才能发光。","The greatest achievement has flaws, yet its use never exhausts. You don't need perfection to shine.","大成若缺，不完美也能发光","Great achievement has flaws; imperfection still shines",2],
+["感觉自己交友不慎后悔不已","无友不如己者","论语·学而","不与不如自己的人交友——不是嫌贫爱富，是择善而从。过去的交友经历让你更清楚要什么样的人。","Don't befriend those beneath your moral standard—not about status, but character. Past bad friends taught you who to seek.","择善而从，过去是教训","Choose the good; past is the lesson",1],
+["总想讨好所有人活得很累","乡人皆好之，何如？未可也","论语·子路","全乡人都说你好，不一定真好。你不可能让所有人满意，让对的人满意就够了。","If everyone in the village praises you—not necessarily good. You can't please all; just please the right ones.","讨好所有人是妄念，讨好对的就够了","Pleasing all is delusion; please the right ones",1],
+["不想参加家长群里的攀比","见贤思齐焉，见不贤而内自省也","论语·里仁","看到别人晒娃，见贤思齐——但更要见不贤而内自省。别人攀比的时候你反省：我需要攀吗？","Seeing others show off kids—learn from the good, but reflect when seeing the unwise. While they compete, ask yourself: do I need to?","攀比是别人的，自省是自己的","Competition is theirs; self-reflection is yours",3],
+["和邻居关系紧张怎么办","里仁为美，择不处仁，焉得知","论语·里仁","住的地方最重要的是邻居的仁德。主动送盘水果、帮取个快递，邻里关系破冰不难。","A neighborhood's beauty is in its kindness. Send some fruit, help with a package—breaking the ice isn't hard.","以仁为邻，送盘水果","Kindness makes neighbors; send some fruit",1],
+["感觉自己江郎才尽没创意了","苟日新，日日新，又日新","大学·汤之盘铭","每天都是新的你。创意不是从脑子里挤出来的，是生活给你的。去菜市场逛一圈就有灵感。","Every day you are new. Creativity isn't squeezed from your brain—it's gifted by life. Walk through a market; inspiration will come.","日日新，创意来自生活","Renewed daily; creativity comes from living",4],
+["觉得人生没有希望了","山重水复疑无路，柳暗花明又一村","游山西村·陆游","你以为前面没路了，拐个弯又是一片新天地。绝望只是视野的边界，不是路的终点。","You think the road ends—turn a corner, and a new world opens. Despair is just the boundary of your view, not the end of the road.","山重水复疑无路，拐个弯","Mountains and rivers seem endless—turn the corner",2],
+["总是和人比较薪资心态崩了","不患寡而患不均，不患贫而患不安","论语·季氏","不怕钱少，怕不公平。但公平不是和别人比出来的，是你心里那杆秤。","Not worried about little, but about unfairness. But fairness isn't measured against others—it's measured in your heart.","公平在心里，不在别人的工资条","Fairness is in your heart, not others' pay stubs",0],
+["春节回家又要面对七大姑八大姨","非礼勿视，非礼勿听，非礼勿言","论语·颜渊","不看他们比划的手，不听他们咀嚼的话，不说反驳的嘴。笑着点头，心里念自己的经。","Don't watch their gesturing hands, don't hear their chewing words, don't speak rebuttal. Smile, nod, and chant your own sutra inside.","不听不看不言，笑着点头","Don't hear, don't see, don't speak; just smile and nod",3],
+["在单位被莫名其妙排挤","君子矜而不争，群而不党","论语·卫灵公","保持尊严但不争斗，合群但不拉帮结派。排挤是一时的，品格是一世的。","Stay dignified without fighting; blend in without forming cliques. Exclusion is temporary; character is permanent.","矜而不争，排挤会过去","Dignified without fighting; exclusion will pass",0],
+["人到中年不知道后半生怎么过","四十而不惑，五十而知天命","论语·为政","五十还不晚。前半生是别人的剧本，后半生你自己写。不惑是你知道什么不重要，天命是你知道什么重要。","Fifty isn't too late. The first half was others' script; the second half you write. Not confused—you know what doesn't matter; knowing fate—you know what does.","前半生看别人，后半生看自己","First half watching others; second half watching yourself",4],
+["好朋友借了大钱不还还躲我","可与共学，未可与适道；可与适道，未可与立","论语·子罕","有些朋友可以一起学习，但不能一起走远。借钱不还是他选了另一条路，你的路还很长。","Some friends study with you but can't walk far. Not repaying means he chose a different path; yours is still long.","走不到一起不强求","Can't walk together? Don't force it",1],
+["我总在晚上后悔白天说过的话","成事不说，遂事不谏，既往不咎","论语·八佾","已经发生的事不说、不劝、不追究。白天的话已经说出口，晚上不再咀嚼。","What's done, don't discuss; what's passed, don't advise on; what's behind, don't blame. Words spoken are gone—stop chewing them at night.","既往不咎，说就说了","What's past, don't blame; it's said, let it go",2],
+["孩子沉迷短视频怎么办","饱食终日，无所用心，难矣哉","论语·阳货","吃饱了整天不用心，这种人最难办。给孩子找一件比短视频更用心的事——运动、画画、乐高。","Fed all day without engaging the mind—that's a hard case. Give children something more engaging than short videos.","不用心最难，用对的心","Idle mind is hardest; find the right engagement",3],
+["老婆说我不浪漫没情调","礼之用，和为贵","论语·学而","礼的核心是和。浪漫不是仪式感，是让她觉得被重视。不用买花，每天倒杯水就是礼。","The core of ritual is harmony. Romance isn't ceremonies—it's making her feel valued. No flowers needed; pouring water daily is ritual enough.","礼是和，倒杯水也是浪漫","Ritual is harmony; pouring water is romance",3],
+["觉得自己太内向不会社交","刚毅木讷，近仁","论语·子路","孔子说刚强、坚毅、不善言辞的人接近仁。内向不是缺陷，是天赋——你不需要变成别人。","Confucius said: firm, resolute, and inarticulate people are close to benevolence. Introversion isn't a flaw—it's a gift. You don't need to become someone else.","内向近仁，不需要变","Introversion is near virtue; don't change",4],
+["婚后的生活太平淡了没激情","君子之道，淡而不厌","中庸","君子的道平淡但不让人厌倦。婚前是烟花，婚后是长明灯。平淡才是最深的浪漫。","The noble path is plain but never dull. Before marriage was fireworks; after is an eternal lamp. Plainness is the deepest romance.","淡而不厌，平淡是长明灯","Plain but not dull; steadiness is the eternal lamp",3],
+["周围的人都在买房我很焦虑","鹪鹩巢于深林，不过一枝；偃鼠饮河，不过满腹","庄子·逍遥游","鸟巢只需一根枝，老鼠喝水只需满肚子。房子再大也只睡一张床。按自己的节奏来。","A bird needs just one branch; a mouse drinks only till full. No matter the house, you sleep in one bed. Follow your own rhythm.","一枝一腹，房子是巢不是枷锁","One branch, one belly; home is nest, not cage",5],
+["工作中遇到瓶颈无法突破","山径之蹊间，介然用之而成路","孟子·尽心","山间小路走多了就成了大路。瓶颈是因为你在同一条路上走太久——试试旁边那条小径。","A mountain path becomes a road through use. Stuck because you've walked the same path too long—try the side trail.","瓶颈是路走窄了，换条小径","Stuck means the path is narrow; try a side trail",0],
+["退休了不知道干什么很空虚","发愤忘食，乐以忘忧，不知老之将至","论语·述而","找到一件让你废寝忘食的事，你就不知老之将至。六岁开始练字不晚，六十岁也不晚。","Find something that makes you forget meals; you won't notice age coming. Starting calligraphy at six isn't too late—neither is sixty.","不知老之将至，找到乐事","Unaware of aging; find your joy",4],
+["被诊断出慢性病觉得天塌了","死生亦大矣","庄子·德充符","死生是大事，但庄子见过更大的东西——道。疾病改变的是生活方式，不是生命的价值。","Life and death are great—but Zhuangzi saw something greater: the Tao. Illness changes lifestyle, not life's value.","疾病改生活方式，不改生命价值","Illness changes how you live, not your worth",6],
+["同事故意不告诉我重要信息","以直报怨，以德报德","论语·宪问","用正直回报怨恨，用恩德回报恩德。他不告诉你是他的失，你继续保持专业是你的直。","Repay resentment with fairness, kindness with kindness. Their withholding is their fault; your continued professionalism is your fairness.","以直报怨，专业是最好的回击","Fairness for resentment; professionalism is the best response",0],
+["总想活成别人眼中的样子","我则异于是，无可无不可","论语·微子","我跟他们不一样，没什么必须的也没什么不行的。活成别人眼中的样子是最累的事。","I'm different from them—nothing is must, nothing is can't. Living as others see you is the most exhausting thing.","无可无不可，做自己最轻松","Nothing must be, nothing can't be; being yourself is easiest",2],
+["亲人突然离世接受不了","逝者如斯夫，不舍昼夜","论语·子罕","河水昼夜不停，时间不会因为你的悲伤暂停。但河水会带着你的思念一直流下去。","The river flows day and night; time won't pause for your grief. But the river will carry your memories forward forever.","逝者如斯，带爱往前","Time flows like water; carry love forward",2],
+["总是忍不住和别人比惨","君子周而不比，小人比而不周","论语·为政","君子团结但不攀比，小人攀比但不团结。比惨是精神内耗，团结是一起变好。","Nobles unite without comparing; small people compare without uniting. Misery contests drain spirit; unity builds everyone.","团结不攀比","Unite, don't compare",2],
+["别人总觉得我高冷难以接近","君子泰而不骄，小人骄而不泰","论语·子路","君子安详而不傲慢，小人傲慢而不安详。别人觉得你高冷是因为他们只看表面。真正了解你的人不需要你解释。","Nobles are composed without arrogance; small people are arrogant without composure. Those who think you're cold only see the surface. Those who know you need no explanation.","泰而不骄，不必解释","Composed without pride; no need to explain",1],
+["害怕衰老带来的各种不便","老吾老以及人之老","孟子·梁惠王","自己会老，所以更要善待现在的老人。你今天的善意，是为未来的自己铺路。","You'll age too, so treat the elderly kindly now. Today's kindness paves the road for your future self.","善待老人就是善待未来的自己","Care for the old is care for your future self",6],
+["觉得自己记性越来越差了","温故而知新，可以为师矣","论语·为政","记性差不重要，重要的是你愿不愿意一遍遍温习。古人背书百遍，不在乎记不记得住。","Bad memory doesn't matter—what matters is willingness to review. The ancients recited a hundred times, not caring about retention.","温故知新，不在乎记忆","Review the old to know the new; memory is secondary",4],
+["不知道要不要结束这段感情","道不同，不相为谋","论语·卫灵公","方向不同就不必勉强同行。不是在否定过去，是在尊重未来。","Different paths don't need to walk together. It's not denying the past—it's respecting the future.","道不同不相为谋","Different paths, different journeys",3],
+["感觉父母的爱是有条件的","父母唯其疾之忧","论语·为政","父母只担心你生病——这才是他们爱的核心。其他条件是附加的焦虑，不是爱的本质。","Parents only truly worry about your illness—that's the core of their love. Other conditions are added anxieties, not love's essence.","爱的核心是担忧，条件是焦虑","Love's core is worry; conditions are anxiety",3],
+["总想从头开始又不知道从哪开始","千里之行，始于足下","道德经·第六十四章","不需要想清楚全程，只需要迈出第一步。路是走出来的，不是想出来的。","You don't need to see the whole path—just take the first step. Roads are walked, not thought into existence.","始于足下，先走第一步","Start at your feet; take the first step",4],
+["经期前情绪特别暴躁","喜怒哀乐之未发，谓之中","中庸","情绪没有发出来的时候叫中。经期不是你的错，但你可以温柔地告诉身边的人：我这几天需要多一点空间。","Before emotions erupt, there is equilibrium. Your period isn't your fault—gently tell those around you: I need a bit more space these days.","未发是中，温和告知","Before eruption is center; gently inform",6],
+["被别人拿来和兄弟姐妹比较","君子不器","论语·为政","你不是一件器物，不是用来和别人比较的工具。你有你的形状和用处。","You're not a vessel—not a tool for comparison. You have your own shape and purpose.","你不是器，不需要比较","You're not a tool; no comparison needed",2],
+["看着别人成双成对自己单身焦虑","德不孤，必有邻","论语·里仁","有德者不会孤单。先把自己的生活过得丰盛，对的人会闻香而来。","The virtuous are never alone. Enrich your own life first—the right person will be drawn by the fragrance.","德不孤，闻香自来","Virtue attracts; fragrance brings them",1],
+["想离开舒适圈又不敢","穷则变，变则通，通则久","周易·系辞","堵住了就变，变了就通，通了就长久。舒适圈之所以叫圈，是因为它有边界——走出去边界就扩大了。","Blocked, change; changed, flow; flowing, endure. The comfort zone is a zone because it has boundaries—step out, and the boundaries expand.","穷则变，变则通","Blocked, change; changed, flow",4],
+["被别人抢了功劳很愤怒","不患无位，患所以立","论语·里仁","不怕没有位置，怕你没有能力自立。被抢的功劳今天能抢，但你的能力谁也抢不走。","Don't worry about lacking position—worry about lacking the ability to stand. Credited stolen can be taken now, but your ability can never be taken.","功劳可抢，能力不可夺","Credit can be stolen; ability cannot",0],
+["总是间歇性踌躇满志持续性混吃等死","一鼓作气，再而衰，三而竭","左传·曹刿论战","第一鼓士气最旺，第二次就衰了。不要一直等下一鼓，把你现在的冲动变成一个小行动。","First drum brings peak morale; the second weakens. Don't wait for the next drum—turn this impulse into one small action now.","一鼓作气，现在行动","First drum's spirit; act now",4],
+["人到三十突然很焦虑","三十而立","论语·为政","孔子的三十而立不是有车有房，是立起自己的价值观。你立了什么？立了就行，不用跟别人比。","Confucius's 'standing at thirty' isn't about house and car—it's standing on your values. What have you stood on? If you have, you've made it.","三十而立，立的是价值观","Standing at thirty means standing on values",4],
+["总觉得对不起自己的家人","往者不可谏，来者犹可追","论语·微子","过去对家人的亏欠已成过往，未来还有无数个日子可以弥补。从今天的一个电话开始。","Past deficits to family are behind you; countless future days remain to make up. Start with one phone call today.","来者可追，从今天开始","The future can be caught; start today",3],
+["想知道如何快速走出失恋","苟日新，日日新","大学·汤之盘铭","每天都洗一次心——不是抹掉过去，是让伤口结新痂。每天做一件分手前没做过的事。","Cleanse your heart each day—not erasing the past, but forming new scabs. Do one thing daily you never did before the breakup.","日日新，每天做一件新事","Renew daily; do one new thing each day",2],
+["夫妻之间越来越没话说","君子之交淡若水","庄子·山木","淡若水不是没话说，是说废话也觉得舒服。不说话坐在一起也不尴尬，才是最高境界。","Plain as water doesn't mean silent—it means even silence is comfortable. Sitting together without needing to speak is the highest state.","淡若水，无言也舒服","Plain as water; comfortable even in silence",3]
+["被同事孤立该主动示好吗","君子求诸己，小人求诸人","论语·卫灵公","君子找自己的原因，小人找别人的问题。被孤立不一定是你的问题，但提升自己永远没错。","Nobles seek within; the petty blame others. Exclusion isn't always your fault, but improving yourself is never wrong.","求诸己不赖人","Seek within; don't blame others",0],
+["上班带饭觉得丢人","士志于道，而耻恶衣恶食者，未足与议也","论语·里仁","一个追求道的人，如果因吃得差穿得差而羞耻，不值得跟他讨论。带饭不丢人，丢人的是虚荣。","One seeking truth who's ashamed of simple food and clothes—not worth discussing with. Packing lunch isn't shameful; vanity is.","带饭是俭，丢人是虚荣","Packing lunch is frugal; shame is vanity",0],
+["面试官问为什么频繁跳槽","人而无恒，不可以作巫医","论语·子路","没有恒心的人连巫医都做不了。每次跳槽背后的理由要是成长的，不是逃跑的。你自问每次是不是往上跳。","Without constancy, you can't even be a shaman. Each jump should be toward growth, not escape. Ask: was each one upward?","每跳是成长，不是逃跑","Each jump is growth, not escape",0],
+["PPT做不好总被领导退回","工欲善其事，必先利其器","论语·卫灵公","想把事做好先磨好工具。花一个下午学排版配色，比你加班改十版有用。","To do good work, sharpen your tools first. Spend an afternoon learning design—better than ten redos at midnight.","先磨刀再砍柴","Sharpen the axe before chopping",0],
+["同事把杂活都推给我做","君子可逝也，不可陷也；可欺也，不可罔也","论语·雍也","你可以去帮忙，但不能被坑。可以善意被利用一次，不能被当傻子一直使唤。第二次就要拒绝了。","You can go help, but can't be trapped. You can be deceived once out of kindness, but not endlessly. Refuse the second time.","可帮不可坑，第二次拒绝","Help, don't be trapped; refuse the second time",0],
+["参加同学会发现大家都比我混得好","不患人之不己知，患不知人也","论语·学而","不怕别人不知道你，怕你不了解别人。混得好不好是给别人看的，活得好不好是自己知道的。","Don't worry others don't know you—worry you don't know yourself. Success is for show; fulfillment is known only to you.","别人知不知不重要，自知最重要","Others knowing you matters less than knowing yourself",0],
+["带团队手下不服管","其身正，不令而行；其身不正，虽令不从","论语·子路","自己正，不下令大家也干；自己不正下了令也没人听。以身作则比下命令管用一万倍。","Be upright, they follow without orders. Be crooked, no order works. Leading by example is ten thousand times more effective.","正己令自行","Be upright; orders follow naturally",0],
+["上班两年存款为零很羞愧","德者本也，财者末也","大学","德行是根本，钱财是末梢。两年零存款不羞耻，这两年你攒的能力和经验才是本金。","Virtue is root; wealth is branch. Zero savings in two years isn't shameful—the skills and experience you gained are your principal.","德是本，财是末","Virtue is root; wealth is branch",5],
+["双十一又忍不住剁手了","少则得，多则惑","道德经·第二十二章","东西少了才真正拥有，多了反而迷惑。你买的不是需要，是空虚。","Less brings gain; more brings confusion. You're buying not needs, but emptiness.","少则得，多则惑","Less is gain; more is confusion",5],
+["被忽悠办了美容卡后悔了","信言不美，美言不信","道德经·第八十一章","真话不好听，好听话不真实。美容院的甜言蜜语就是美言不信，吃一堑长一智。","True words aren't pretty; pretty words aren't true. Sweet talk at the salon was just that—learn and move on.","美言不信，吃一堑长一智","Pretty words lie; learn the lesson",5],
+["想买基金但什么都不懂","知不知，尚矣；不知知，病也","道德经·第七十一章","知道自己不懂是高明，不懂装懂是病。买基金先恶补三个月知识再说。","Knowing your ignorance is wisdom; ignorant pretense is disease. Study for three months before buying any fund.","知不知是智，不懂装懂是病","Knowing ignorance is wisdom; faking knowledge is sickness",5],
+["越来越不想发朋友圈了","知者不言，言者不知","道德经·第五十六章","智者不多言，多言者不智。减少朋友圈不是社交退缩，是你在从'表达者'变成'观察者'。","The wise don't talk much; talkers aren't wise. Posting less isn't withdrawal—you're evolving from expresser to observer.","不发是知，观察比表达深","Not posting is wisdom; observing is deeper than expressing",1],
+["朋友结婚包红包不知道该包多少","礼，与其奢也，宁俭","论语·八佾","礼的本质不在奢，在诚。红包量力而行，别打肿脸充胖子。","Ritual prefers frugality over extravagance. Give within your means; don't puff yourself up.","礼宁俭，量力而行","Ritual prefers modesty; give what you can",1],
+["被别人评价衣品差","士志于道，而耻恶衣恶食者，未足与议也","论语·里仁","穿得普通但内心充实，比穿得光鲜但脑子空洞强一万倍。外表是给别人看的，内涵是自己的。","Plain clothes with a full heart beat flashy clothes with an empty mind. Looks are for others; substance is yours.","衣恶不耻，心空才耻","Simple clothes aren't shameful; empty hearts are",1],
+["被闺蜜抢了男朋友","不逆诈，不亿不信","论语·宪问","不要预设欺骗，但也不要回避真相。被抢走的本来就不属于你。感谢闺蜜帮你做了筛选。","Don't pre-assume deceit, but don't avoid truth. What's taken was never yours. Thank her for filtering for you.","不逆诈，被抢走的本来就不牢","Don't assume deceit; what's taken was never solid",1],
+["想离婚又怕伤害孩子","成事不说，遂事不谏，既往不咎","论语·八佾","已成的事不必再说。孩子需要的是两个快乐的人，不是一个凑合的家。你的幸福才是给孩子最好的教育。","What's done, don't dwell on. Kids need two happy people, not one forced home. Your happiness is their best education.","孩子要快乐的你，不要凑合的家","Kids want happy you, not a patched home",3],
+["婆婆总是干预我们的生活方式","事父母几谏，见志不从，又敬不违，劳而不怨","论语·里仁","对长辈可以委婉建议，她不听就继续恭敬、不违抗、继续操劳但不怨恨。不是忍气吞声，是设置温柔的边界。","Gently advise elders; if they don't listen, remain respectful and persistent but not resentful. Soft boundaries, not silent suffering.","几谏不从，敬而不怨","Advise gently; if unheard, respect without resentment",3],
+["生了孩子后夫妻感情变淡","发而皆中节，谓之和","中庸","情绪发出来但恰到好处叫和。孩子来了你们成了战友——战友情也是一种感情。偶尔把孩子交给老人，两个人约个会。","Emotions expressed in measure is harmony. With a child, you've become comrades—and that's also love. Occasionally leave the baby with grandparents and date each other.","战友也是情人，偶尔约会","Comrades are lovers too; date occasionally",3],
+["爸妈天天转发养生谣言给我","道听而涂说，德之弃也","论语·阳货","路上听到就传播，这是道德的抛弃。告诉爸妈：您转的我每条都认真看了，但有些不太准，我们一起看看靠谱的。","Hearsay spread carelessly abandons virtue. Tell them: I read everything you send, but some aren't accurate—let's check reliable sources together.","道听途说不可取,陪他们一起看","Hearsay abandoned virtue; watch together",3],
+["想要二胎但老公不想","二人同心，其利断金","周易·系辞","两个人心齐能断金。二胎不是一个人能决定的，先同心地沟通，再说利。把'我'的愿望变成'我们'的计划。","Two hearts aligned can sever metal. A second child isn't one person's decision—align hearts first, then discuss. Turn 'my wish' into 'our plan.'","同心断金，从我到我们","Aligned hearts sever metal; from me to us",3],
+["被朋友放鸽子三次还该信他吗","人而无信，不知其可也","论语·为政","三次失信说明他的承诺不值钱。不是不原谅，是保护好自己——下次他约你，先确认三遍。","Three broken promises mean his word is worthless. It's not about forgiveness—it's about protecting yourself. Next time, triple-confirm.","三次不立信，保护自己","Three times no trust; protect yourself",1],
+["感觉自己像个工具人","君子不器","论语·为政","你不是一件器皿，不是被定义成单一功能的工具。你可以是杯子也可以是花瓶，甚至是一座山。","You're not a vessel—not defined by a single function. You can be a cup, a vase, or even a mountain.","你不器，别定义自己","You're not a vessel; don't define yourself",4],
+["总觉得在浪费时间一事无成","无用之用，方为大用","庄子·人间世","庄子说无用才是大用。发呆不是浪费时间，是无用之用——在信息爆炸的时代，空白是最奢侈的生产力。","Zhuangzi says uselessness is great use. Zoning out isn't wasted time—in our information-saturated age, blank space is the ultimate productivity.","无用是大用，空白是生产力","Uselessness is great use; blank space is productivity",4],
+["孩子问活着的意义是什么","未知生，焉知死","论语·先进","孔子说还没搞懂生，怎么知道死？告诉孩子：活着就是去找这个答案，而找的过程本身就是意义。","Confucius said: not understanding life, how can you know death? Tell them: living is the search for this answer, and the search itself is the meaning.","活着就是在找答案的过程","Living is the search for meaning",3],
+["觉得健身太苦坚持不下去","天将降大任于是人也，必先苦其心志，劳其筋骨","孟子·告子","上天要给你大任，先让你的筋骨劳苦。每次举铁都是给你的大任在天平上加一个砝码。","Heaven gives great missions only after hardship. Every rep adds a weight to your scale of destiny.","苦筋骨是降大任","Hardship is heaven's mission",6],
+["总觉得自己不够好看","西施病心而颦其里，其里之丑人见而美之","庄子·天运","西施皱眉是因为心口疼，丑女模仿反而更丑。美不是模仿别人，是做最好的自己。","Xi Shi frowned because her heart ached; the ugly woman imitated and looked worse. Beauty isn't imitation—it's your best self.","美是做自己，不是模仿","Beauty is being yourself, not imitating",2],
+["被同事穿了小鞋想报复","或曰：以德报怨，何如？子曰：何以报德？以直报怨，以德报德。","论语·宪问","有人问以德报怨怎样，孔子说那用什么报德？用正直报怨，用恩德报德。报复拉低你的格局，正直让人尊重。","Some asked: repay resentment with kindness? Confucius: then how repay kindness? Repay resentment with fairness, kindness with kindness.","以直报怨，以德报德","Fairness for resentment; kindness for kindness",0],
+["感觉一生将碌碌无为","君子疾没世而名不称焉","论语·卫灵公","君子怕死后名字不被称道。但名字不是别人给你刻的碑，是你走出来的路。今天的每步都在书写你的墓志铭。","The noble worry their name won't be remembered after death. But your name isn't etched by others—it's the road you walk. Every step today writes your epitaph.","每一步都是墓志铭","Every step is your epitaph",4],
+["总是拿别人的错误惩罚自己","不迁怒，不贰过","论语·雍也","不把愤怒转嫁给别人，不犯第二次同样的错。别人犯了错惩罚你，你还在惩罚自己——这已经是贰过了。","Don't shift anger, don't repeat mistakes. Others' errors punish you, and you keep punishing yourself—that's already repeating the mistake.","不迁怒于己","Don't shift anger onto yourself",2],
+["在网上跟人吵架越想越气","善战者不怒","道德经·第六十八章","善于战斗的人不轻易发怒。网上的嘴仗从来赢不了——你赢了也是输了时间。关掉页面就是赢了。","Good fighters don't anger easily. Online arguments are never won—even if you 'win,' you lose time. Closing the page is winning.","善战不怒，关掉就是赢","Good fighters aren't angry; closing is winning",2],
+["面对选择无从下手","鱼，我所欲也；熊掌，亦我所欲也。二者不可得兼","孟子·告子","鱼和熊掌不能兼得。选择的痛苦不是因为没有好选项，是因为两个都想要。写下两个选项，划掉一个，你就知道答案了。","Can't have both fish and bear paw. The pain of choice isn't lack of options—it's wanting both. Write both down, cross one out—you'll know.","写下两选项，划掉就知道","Write two, cross one—you'll know",4],
+["总失眠想太多脑子停不下来","吾尝终日不食，终夜不寝，以思，无益，不如学也","论语·卫灵公","孔子说整夜不睡地空想没有用，不如学习。想太多不如做一点儿——哪怕是抄一页书、洗个碗。","Confucius said: I once thought all night without sleep—useless. Better to learn. Overthinking loses to doing—even copying a page or washing dishes.","思无益不如学，做代替想","Thinking useless; learn instead—do, don't think",6],
+["对新环境适应不了很焦虑","入太庙，每事问","论语·八佾","孔子进太庙每件事都问。不懂就开口，真诚的新人永远受欢迎。怕的不是不懂，是不懂装懂。","Confucius asked about everything upon entering the temple. Ask when you don't know—sincere newcomers are always welcome. Fear not ignorance, but fake knowledge.","每事问，真诚是通行证","Ask everything; sincerity is your pass",0],
+["老婆总嫌我赚得少","贫而无怨难，富而无骄易","论语·宪问","贫穷而不抱怨很难，富有而不骄傲容易。告诉她：我在努力，而且穷的时候不抱怨，富了也不会骄傲——这样的人请珍惜。","It's hard to be poor without complaint, easy to be rich without pride. Tell her: I'm working hard, and someone poor without complaint and rich without pride—value that.","贫而无怨难，请珍惜","Poor without complaint is hard; value it",3],
+["工作中能力不被认可","不患莫己知，求为可知也","论语·里仁","不怕没人知道自己，只求有值得被知道的实力。持续输出，是金子迟早会被挖出来。","Don't worry no one knows you—worry you're not worth knowing. Keep outputting; gold will eventually be mined.","不患不己知，求可知","Don't worry about unknown; strive to be worth knowing",0],
+["退休后跟社会脱节了","老骥伏枥，志在千里；烈士暮年，壮心不已","龟虽寿·曹操","老马站在槽边，心想着千里之外。烈士老了雄心还在。退休是新赛道的起点，开个公众号、学个乐器、走遍中国。","The old steed at the trough dreams of a thousand miles. Retirement is the start of a new track—start a blog, learn music, travel China.","老骥志千里，退休是起点","Old steed dreams far; retirement is the starting line",4],
+["总是无意识地暴饮暴食","五味令人口爽","道德经·第十二章","过多的味道让味觉失灵。暴饮暴食不是饿了，是心里有洞想填。去找那个洞在哪，别用食物填。","Too many flavors dull the palate. Binge eating isn't hunger—it's a hole in your heart trying to fill. Find the hole; don't fill it with food.","心里有洞，别用食物填","A hole in the heart; don't fill it with food",6],
+["父母越来越像小孩怎么应对","老吾老以及人之老","孟子·梁惠王","自己老了也这样。他们变小了，你变大了——小时候他们牵你，现在你牵他们。耐心是一种轮回。","You'll age like this too. They've grown small; you've grown big. They held your hand; now you hold theirs. Patience is a cycle.","轮回的耐心，你牵他们","Cyclic patience; now you hold them",3],
+["想学的东西太多时间不够用","吾生也有涯，而知也无涯。以有涯随无涯，殆已","庄子·养生主","生命有限，知识无限。用有限的追无限的，很危险。今年只学三样，学透再换。","Life is limited; knowledge infinite. Chasing the infinite with the finite is dangerous. Choose three things this year; master before switching.","有涯追无涯殆矣，少而精","Finite chasing infinite is perilous; few but deep",4],
+["总是忍不住跟风买网红产品","不贵难得之货，使民不为盗","道德经·第三章","不追捧稀罕的东西，就不会有人去偷。网红产品就是难得之货——你不追捧它，它就是个普通商品。","Don't prize rare goods, and people won't steal. Viral products are just 'rare goods'—stop prizing them, and they're just ordinary items.","不贵难得之货，网红是平凡物","Don't prize rare goods; viral is ordinary",5],
+["被人说胖心里不舒服","君子不重则不威","论语·学而","这个'重'不是体重，是厚重、稳重。胖不胖不决定你的威严，你对自己的态度决定一切。","This 'weight' isn't body mass—it's gravitas. Your size doesn't determine your authority; your attitude toward yourself does.","重不在体，在态","Weight is in attitude, not body",6],
+["牙齿坏了不敢去看牙医","小不忍则乱大谋","论语·卫灵公","不忍一时的牙疼去看医生，就会乱了一颗牙变成一口牙的大谋。今天预约，明天就好。","Not enduring momentary pain to see the dentist ruins the big plan—one bad tooth becomes a mouthful. Book today; fix tomorrow.","小不忍乱大谋，看牙要早","Small impatience ruins big plans; see the dentist early",6],
+["被降职了觉得没脸见人","穷则独善其身，达则兼济天下","孟子·尽心","不得志时修养好自己，得志时再帮助天下。降职不是终点，是你修养自己的最佳时机。","In hardship, cultivate yourself. Demotion isn't the end—it's your best window for self-cultivation.","穷则独善，降职是修身","In difficulty, better yourself; demotion is cultivation",0],
+["同事总迟到让我替他干活","躬自厚而薄责于人，则远怨矣","论语·卫灵公","多责备自己，少责备别人，就能远离怨恨。他迟到是他薄，你替他干是你厚。厚一次是人情，厚十次是愚蠢。","Blame yourself more, others less—and stay free of resentment. His tardiness is his thinness; covering once is grace, covering ten times is folly.","厚一次是人情，十次是愚蠢","Once is grace; ten times is folly",0],
+["对未来感到极度迷茫","知止而后有定，定而后能静，静而后能安","大学","知道停在哪里才能坚定，坚定才能静下来，静下来才能安心。你现在需要的不是答案，是先停下来。","Knowing where to stop gives stability; stability gives calm; calm gives peace. What you need now isn't answers—it's to stop first.","先停下来，静下来才能安","Stop first; calm brings peace",2],
+["人到中年想转行又不敢","朝闻道，夕死可矣","论语·里仁","早上明白了道，晚上死去也值。转行不是求道，但如果你早上醒来觉得新方向就是你的道——去吧，晚上不后悔。","Hear the truth at dawn, die at dusk content. Switching isn't the truth—but if you wake feeling the new path is your truth—go. No regrets at dusk.","朝闻道，不悔晚","Hear the way at dawn; no regrets at dusk",0],
+["被人嘲笑口音很重","君子敬而无失，与人恭而有礼，四海之内，皆兄弟也","论语·颜渊","君子认真不出错，对人恭敬有礼，天下人都是兄弟。口音是你的根，不是你的错。嘲笑你口音的人才失了礼。","The noble are respectful and faultless; courteous to all—under heaven, all are brothers. Your accent is your root, not your fault. Those mocking you have lost courtesy.","口音是根，嘲笑才失礼","Accent is root; mockery is rudeness",1],
+["在网上被人肉搜索威胁了","非礼勿视，非礼勿听，非礼勿言，非礼勿动","论语·颜渊","不看那些恶意的内容，不传谣，不回骂，不理会。保存证据、报警、拉黑——这是孔子说的'礼'在现代的延伸。","Don't look at malice, don't spread, don't respond, don't engage. Save evidence, report, block—this is Confucius's 'propriety' for the digital age.","非礼不动，保存证据拉黑","Improper? Don't engage; save evidence and block",1],
+["小组作业队友摆烂","道不同，不相为谋","论语·卫灵公","你们的'道'不同——你要成绩他要混。下次组队前先看对方的道。这次就当练了自己的抗压能力。","Your paths differ—you want grades, they want coasting. Next time, screen teammates' paths first. This time, count it as resilience training.","道不同不相为谋，下次看准","Different paths don't walk together; next time screen carefully",0],
+["总是给别人做嫁衣","曲则全，枉则直","道德经·第二十二章","委屈反而能保全，弯曲反而能伸直。给别人做嫁衣不亏——你做衣服的手艺谁也拿不走。","Bending preserves; curving straightens. Making wedding dresses for others isn't a loss—the dressmaking skill is yours forever.","手艺是自己的，谁也拿不走","The craft is yours; none can take it",0],
+["年龄增长害怕被职场淘汰","物壮则老，是谓不道，不道早已","道德经·第三十章","太壮了就会衰老，不合道就会早亡。想要不淘汰，不是回到年轻，是让自己进化——学会AI、跨界、做年轻人不做的。","Over-strong leads to aging; not following the Way leads to early end. To stay relevant, don't chase youth—evolve. Learn AI, cross boundaries, do what youth won't.","不道早已，进化不淘汰","Not following the Way ends early; evolve to stay",0],
+["亲戚总问我一个月赚多少钱","富与贵，是人之所欲也，不以其道得之，不处也","论语·里仁","富贵是人都想要的，但不以正道得来就不要。工资是私事，不以正确方式问的可以不答。笑着说'够花'。","Wealth and status are desired by all—but if not gained rightly, refuse them. Salary is private; questions asked improperly need no answer. Smile and say 'enough.'","不以其道问，可以笑而不答","Improperly asked; smile without answering",1],
+["被人说自己不合群很孤立","鸟兽不可与同群，吾非斯人之徒与而谁与","论语·微子","不能和鸟兽同群，我不跟人在一起跟谁在一起。但不合群不等于没朋友——你是跟对的人合群。","Can't flock with birds and beasts—I'm with humans. But being 'unsociable' doesn't mean friendless—you're just selective about your flock.","跟对的人合群","Flock with the right ones",1],
+["看到别人都很努力自己很慌","学如不及，犹恐失之","论语·泰伯","学习像在追什么东西，追上了还怕丢掉。但不是所有人都要跑你的赛道。你按自己的速度来。","Learning feels like chasing—catch up and fear losing it. But not everyone runs your track. Go at your own pace.","别人的赛道不关你事","Others' tracks aren't your concern",4],
+["家里老人病了我在外地心急如焚","父母在，不远游，游必有方","论语·里仁","游必有方——这个'方'现在就是你的方向：安排好远程医疗、托付亲友、每天视频，你不在身边但心在。","Wandering must have a direction—now your direction is: arrange remote care, trust relatives, video call daily. You're not there, but your heart is.","游必有方，心在即是在","Wandering has a direction; your heart being there is being there",3],
+["感觉自己总是讨好型人格","巧言令色，鲜矣仁","论语·学而","花言巧语、装出和颜悦色的人很少有仁德。讨好不是善良，是另一种控制。真正的仁是真诚地站在那。","Sweet words and pleasing faces rarely hold virtue. People-pleasing isn't kindness—it's another form of control. True benevolence stands there sincerely.","讨好不是仁，真诚才是","Pleasing isn't benevolence; sincerity is",1],
+["面对职场霸凌不知如何是好","勇者不惧","论语·子罕","勇敢的人不恐惧。霸凌的本质是找软柿子捏。你硬一次——冷静但坚定地说不——对方反而会退。","The brave don't fear. Bullying targets soft persimmons. Stand firm once—say no calmly but firmly—and they'll retreat.","勇者不惧，硬一次","The brave don't fear; stand firm once",0],
+["当了全职妈妈没有价值感","君子素其位而行，不愿乎其外","中庸","君子在什么位置就做什么事，不羡慕位置之外的东西。你现在的岗位是世界上最重要的——培养一个人。","The noble act according to their position, not envying beyond it. Your current role is the world's most important—raising a human being.","在其位行其事，培养一个人","In your position, do your work—raising a human being",3],
+["被公司优化后半年找不到工作","天之道，损有余而补不足","道德经·第七十七章","天之道是减多余的来补不足的。你现在的不足，是在为之前透支的自己补课。这段时间是你给灵魂放的假。","Heaven's way is subtracting the excess to supplement the deficient. Your current deficit is repaying your previous overdraft. This time is a vacation for your soul.","损有余补不足，放假给灵魂","Subtract excess, supplement deficit; vacation for the soul",0],
+["总是梦到过去的事醒来难受","成事不说，遂事不谏，既往不咎","论语·八佾","已成的事不说了，过去了不追究。梦是潜意识在整理记忆，醒来就放下，那是大脑在打扫卫生。","What's done, don't discuss; what's passed, don't dwell on. Dreams are the subconscious sorting memories—waking, let them go. It's your brain cleaning house.","梦是大脑打扫，醒来放下","Dreams are the brain cleaning; let go upon waking",2],
+["总想攒钱但物价越来越高","富而可求也，虽执鞭之士，吾亦为之","论语·述而","富贵如果值得追求，就算做赶车人也行。贬值是宏观的，攒钱是微观的——你控制不了物价，但可以控制今天的每一块钱。","If wealth were worth chasing, I'd be a driver. Inflation is macro; saving is micro—you can't control prices, but you can control every dollar today.","控不了物价，控得了自己","Can't control prices; can control yourself",5],
+["感觉人与人之间的关系越来越冷漠","君子敬而无失，与人恭而有礼，四海之内，皆兄弟也","论语·颜渊","君子认真无过失，对人恭敬有礼，天下人都是兄弟。冷漠的时代更需要你主动递出第一份温暖。","The noble, faultless and courteous, finds brothers everywhere. In a cold era, your initiative to offer warmth is needed most.","你递温暖，世界回你阳光","Offer warmth; the world returns sunshine",1],
+["想学新东西但怕被人笑","敏而好学，不耻下问","论语·公冶长","聪明又爱学，不耻于向不如自己的人请教。学新东西不怕被笑——笑你的人十年后可能还得跟你学。","Quick and eager to learn, not ashamed to ask those beneath you. Don't fear mockery for learning new things—those laughing may need to learn from you in ten years.","不耻下问，十年后他们问你","Not ashamed to ask; in ten years they'll ask you",4],
+["觉得自己抑郁症了但家人不理解","人不知而不愠，不亦君子乎","论语·学而","别人不理解你，你不生气——这就是君子。家人不理解抑郁是因为他们没经历过。带他们一起去看医生，让医生说。","Not angered when misunderstood—that's nobility. Family doesn't understand depression because they haven't lived it. Take them to the doctor; let the doctor explain.","不愠是君子，带他们去看医生","Not angered is noble; take them to the doctor",2],
+["看到朋友圈好友都结婚了","君子和而不同","论语·子路","君子能和而不同——别人的人生步伐跟你不同，你不需要追赶。结婚是'和'，单身的'不同'也是正常的。","Nobles harmonize without conforming. Others' life pace differs from yours—you don't need to catch up. Marriage is 'harmony'; single 'difference' is also normal.","和而不同，节奏自己定","Harmonize without conforming; your pace, your choice",2],
+["感觉和周围人格格不入","君子和而不同，小人同而不和","论语·子路","君子和谐但不完全相同，小人表面一致但内心不合。格格不入说明你有独立人格，不是你的问题。","Nobles harmonize without sameness; the petty conform without harmony. Not fitting in means you have independent character—that's not a flaw.","格格不入是独立人格","Not fitting in is independent character",2],
+["做的项目被别人否决了","多见阙殆，慎行其余，则寡悔","论语·为政","多看危险的地方，小心做其余的事，就能减少后悔。项目被否不是失败，是多见了一次'殆'。下次就少了这一个坑。","See the dangers; act carefully on the rest—less regret. Project rejection isn't failure; you've just identified one more pitfall for next time.","被否是见殆，下次少一坑","Rejection is seeing danger; one less pit next time",0],
+["父母不支持我的梦想","事父母几谏，见志不从，又敬不违，劳而不怨","论语·里仁","对父母反复建议，他们不听就继续恭敬、不违抗地执行，但不怨恨。你执行你的梦想，同时保持恭敬——这就是几谏。","Advise parents repeatedly; if unheard, remain respectful and persistent without resentment. Pursue your dream while staying respectful—that's gentle persuasion.","几谏不怨，做你的梦，敬你的人","Advise without resentment; dream your dream, respect your people",3],
+["总是在想如果能重来该多好","来者犹可追","论语·微子","过去追不回，未来还可以追。如果重来一百次你还是会走这条路——因为那是当时的你做的当时最好的选择。","The past is gone; the future can be pursued. If you could redo it a hundred times, you'd still choose this path—because that was the best choice by the you of that time.","来者可追，过去的你就是最好的你","The future is catchable; past you made the best choice",2],
+["想辞职去开咖啡馆但怕赔本","凡事豫则立，不豫则废","中庸","任何事有准备就能成，没准备就会废。先周末去咖啡馆打工三个月，把账算清楚再辞职。","Prepared things succeed; unprepared things fail. Work weekends at a café for three months first; crunch the numbers before quitting.","豫则立，先做再说","Prepare to succeed; do before committing",0],
+["感觉自己被消耗成了一个空壳","致虚极，守静笃","道德经·第十六章","完全放空，守住内心的静。空不是没有了，是清空了才能装新的。像倒掉杯子里的旧水才能喝新茶。","Reach total emptiness; guard inner stillness. Being empty isn't loss—it's clearing space to receive. Empty the old water to brew new tea.","致虚极，清空才能装新","Reach emptiness; clear to receive anew",2],
+["下雨天就心情不好宅在家","不以物喜，不以己悲","岳阳楼记·范仲淹","不因外界而欢喜，不因自己而悲伤。下雨天心情不好是因为你把阳光当成了快乐的开关，试着听雨——古人都爱的雅事。","Don't let externals dictate joy; don't let self bring sorrow. Rain brings gloom because you've made sunshine your happiness switch. Try listening to rain—ancients loved it.","不以物喜，听雨也不错","Let not weather sway mood; listening to rain is nice too",2],
+["感觉自己身体年龄比实际老","养心莫善于寡欲","孟子·尽心","养心最好的方法是减少欲望。熬夜刷手机是欲，暴饮暴食是欲。寡欲的人面相年轻十岁。","Nothing nurtures the heart better than reducing desires. Late-night scrolling is desire; binge eating is desire. Fewer desires, ten years younger in appearance.","寡欲养心，心年轻人就年轻","Fewer desires nurture the heart; young heart, young body",6],
+["运动后第二天全身酸痛不想继续","天行健，君子以自强不息","周易·乾卦","天体运行刚健不息。酸痛不是信号让你停，是告诉你——肌肉在变强。休息一天继续。","Heaven moves with robust persistence. Soreness isn't a stop sign—it's telling you muscles are strengthening. Rest one day, then continue.","天行健，酸痛是变强信号","Heaven moves; soreness is the signal of strengthening",6],
+["总是跟风别人买的东西买回来就后悔","不贵难得之货，使民不为盗","道德经·第三章","不追捧稀罕的东西就不会被诱惑。别人买是因为营销洗脑，你不买才是独立思考。冷静一天再决定。","Don't prize rare goods, and you won't be tempted. Others buy because marketing brainwashed them; not buying is independent thinking. Wait one day before deciding.","不贵难得之货，冷静一天","Don't prize rarity; wait one day",5],
+["被最好的朋友出卖了很痛苦","义者，宜也","中庸","什么是义？做该做的事。朋友出卖你，你该做的不是报复，是反思这段关系给你的教训——然后体面地退出。","What is righteousness? Doing what's proper. Betrayed? What's proper isn't revenge—it's reflecting on the lesson, then exiting with dignity.","义就是体面地离开","Righteousness is dignified departure",1],
+["女友嫌我打游戏不陪她","饱食终日，无所用心，难矣哉","论语·阳货","吃饱了整天不用心——孔子说这种人最难办。游戏是用心在虚拟世界，陪她才是用心在现实世界。关一小时游戏陪她。","Fed all day without engaging the mind—Confucius said that's the hardest case. Gaming engages in virtual worlds; being with her engages in reality. Switch for an hour.","用心在现实，关一小时游戏","Engage in reality; switch for an hour",3],
+["总是刷短视频刷到半夜","非礼勿视","论语·颜渊","不符合礼的不看。短视频一半是不符合'礼'的——浪费时间、贩卖焦虑。设定每天30分钟上限。","Don't watch what's improper. Half of short videos are improper—wasting time, selling anxiety. Set a 30-minute daily limit.","非礼勿视，设30分钟上限","Don't watch improper; set a 30-minute limit",6],
+["婆婆说我做的菜不好吃","食不厌精，脍不厌细","论语·乡党","孔子说粮食不嫌精，鱼肉不嫌细。下次做得更精细——不是为了讨好婆婆，是为了提高自己的厨艺。","Confucius said: food can't be too refined, meat can't be too fine. Next time, make it better—not to please mother-in-law, but to elevate your own cooking.","不厌精细，提升自己","Never too refined; elevate yourself",3],
+["自己辛辛苦苦攒的钱被人骗了","祸兮福之所倚，福兮祸之所伏","道德经·第五十八章","祸里藏着福，福里藏着祸。被骗是你的祸，但让你学会了——防人之心不可无。这笔学费交了就值了。","Misfortune holds fortune; fortune hides misfortune. Being scammed is misfortune—but it taught you: trust with caution. The tuition was worth it if you learned.","祸福相依，学费交了就值了","Misfortune and fortune entwine; tuition paid is worth it",5],
+["职场新人被老员工刁难","年长以倍，则父事之","礼记·曲礼","对年长一倍的人，像对父亲一样对待。不用讨好，但保持尊重。时间久了，你的敬业会让他们不好意思。","Treat those twice your age as you would a father. Don't flatter, but stay respectful. Over time, your professionalism will make them blush.","父事之，敬而远恶","Treat as elders; respect from a distance",0],
+["被上级强制要求加班还不给钱","富与贵，是人之所欲也，不以其道得之，不处也","论语·里仁","用不义手段得来的富贵不要。不给钱让你加班就是不以其道。收集证据，该走就走——不以其道的地方不值得留恋。","Wealth unjustly gained is not worth staying for. Unpaid overtime is unjust gain. Gather evidence, and leave—a place not following the Way isn't worth staying.","不以其道，不值得留","Unjust gain; not worth staying",0],
+["想求助心理咨询但担心隐私泄露","非礼勿言","论语·颜渊","不该说的话不说。心理咨询师有保密协议——那是他们的'礼'。你可以放心说，这是你的权利。","Don't speak what's improper. Therapists have confidentiality—that's their propriety. You can speak freely; it's your right.","咨询师有礼，你可放心说","Therapists have propriety; speak freely",2],
+["被催生二胎压力很大","子生三年，然后免于父母之怀","论语·阳货","孩子生下来三年才能脱离父母怀抱。不是催生几个的问题，是每个生命都值得你用满三年去爱。你想好了再要。","A child takes three years to leave a parent's arms. It's not about how many—it's that each life deserves three full years of love. Decide when ready.","三年怀抱，想好再要","Three years in arms; decide when ready",3],
+["女儿带的男朋友我不同意","爱之，能勿劳乎","论语·宪问","爱她，能不让她受苦吗？但你的爱是让她成长，不是替她选择。不同意可以温和表达，但最终是她的路。","Love her, can you spare her hardship? But your love should help her grow, not choose for her. Express gently, but it's ultimately her path.","爱是助长，不是替选","Love helps grow, not choose",3]
+["被同事孤立该主动示好吗", "君子求诸己，小人求诸人", "论语·卫灵公", "君子找自己的原因，小人找别人的问题。被孤立不一定是你的问题，但提升自己永远没错。", "Nobles seek within; the petty blame others. Exclusion isn't always your fault, but improving yourself is never wrong.", "求诸己不赖人", "Seek within; don't blame others", 0],
+["上班带饭觉得丢人", "士志于道，而耻恶衣恶食者，未足与议也", "论语·里仁", "带饭不丢人，丢人的是虚荣。", "One seeking truth ashamed of simple food—not worth discussing with. Packing lunch isn't shameful; vanity is.", "带饭是俭，丢人是虚荣", "Packing lunch is frugal; shame is vanity", 0],
+["面试官问为什么频繁跳槽", "人而无恒，不可以作巫医", "论语·子路", "没有恒心的人连巫医都做不了。每次跳槽应是为了成长，不是逃跑。", "Without constancy you cannot even be a shaman. Each jump should be toward growth, not escape.", "每跳是成长，不是逃跑", "Each jump is growth, not escape", 0],
+["PPT做不好总被领导退回", "工欲善其事，必先利其器", "论语·卫灵公", "想把事做好先磨好工具。花一个下午学排版配色，比你加班改十版有用。", "To do good work, sharpen your tools first. Spend an afternoon learning design—better than ten redos.", "先磨刀再砍柴", "Sharpen the axe before chopping", 0],
+["同事把杂活都推给我做", "君子可逝也，不可陷也；可欺也，不可罔也", "论语·雍也", "你可以去帮忙，但不能被坑。可以善意被利用一次，不能一直当傻子。第二次就拒绝。", "You can help but cannot be trapped. Deceived once out of kindness, but not endlessly. Refuse the second time.", "可帮不可坑，第二次拒绝", "Help, don't be trapped; refuse the second time", 0],
+["参加同学会发现大家都比我混得好", "不患人之不己知，患不知人也", "论语·学而", "不怕别人不知道你，怕你不了解自己。混得好是给别人看的，活得好是自己知道的。", "Don't worry others don't know you—worry you don't know yourself. Success is for show; fulfillment is known only to you.", "别人知不知不重要，自知最重要", "Others knowing you matters less than knowing yourself", 0],
+["带团队手下不服管", "其身正，不令而行；其身不正，虽令不从", "论语·子路", "自己正，不下令大家也干；自己不正下了令也没人听。以身作则比下命令管用一万倍。", "Be upright, they follow without orders. Be crooked, no order works. Leading by example is infinitely more effective.", "正己令自行", "Be upright; orders follow naturally", 0],
+["上班两年存款为零很羞愧", "德者本也，财者末也", "大学", "德行是根本，钱财是末梢。两年零存款不羞耻，这两年攒的能力和经验才是本金。", "Virtue is root; wealth is branch. Zero savings isn't shameful—the skills and experience you gained are your principal.", "德是本，财是末", "Virtue is root; wealth is branch", 5],
+["双十一又忍不住剁手了", "少则得，多则惑", "道德经·第二十二章", "东西少了才真正拥有，多了反而迷惑。你买的不是需要，是空虚。", "Less brings gain; more brings confusion. You're buying not needs, but emptiness.", "少则得，多则惑", "Less is gain; more is confusion", 5],
+["被忽悠办了美容卡后悔了", "信言不美，美言不信", "道德经·第八十一章", "真话不好听，好听话不真实。美容院的甜言蜜语就是美言不信，吃一堑长一智。", "True words aren't pretty; pretty words aren't true. Learn the lesson and move on.", "美言不信，吃一堑长一智", "Pretty words lie; learn the lesson", 5],
+["想买基金但什么都不懂", "知不知，尚矣；不知知，病也", "道德经·第七十一章", "知道自己不懂是高明，不懂装懂是病。买基金先恶补三个月知识再说。", "Knowing your ignorance is wisdom; ignorant pretense is disease. Study for three months before buying.", "知不知是智，不懂装懂是病", "Knowing ignorance is wisdom; faking knowledge is sickness", 5],
+["越来越不想发朋友圈了", "知者不言，言者不知", "道德经·第五十六章", "智者不多言，多言者不智。减少朋友圈不是社交退缩，是你在从表达者变成观察者。", "The wise don't talk much; talkers aren't wise. Posting less isn't withdrawal—you're evolving from expresser to observer.", "不发是知，观察比表达深", "Not posting is wisdom; observing is deeper than expressing", 1],
+["朋友结婚包红包不知道该包多少", "礼，与其奢也，宁俭", "论语·八佾", "礼的本质不在奢，在诚。红包量力而行，别打肿脸充胖子。", "Ritual prefers frugality over extravagance. Give within your means.", "礼宁俭，量力而行", "Ritual prefers modesty; give what you can", 1],
+["被别人评价衣品差", "士志于道，而耻恶衣恶食者，未足与议也", "论语·里仁", "穿得普通但内心充实，比穿得光鲜但脑子空洞强一万倍。外表是给别人看的，内涵是自己的。", "Plain clothes with a full heart beat flashy clothes with an empty mind.", "衣恶不耻，心空才耻", "Simple clothes aren't shameful; empty hearts are", 1],
+["被闺蜜抢了男朋友", "不逆诈，不亿不信", "论语·宪问", "不要预设欺骗，但也不要回避真相。被抢走的本来就不属于你。感谢她帮你做了筛选。", "Don't pre-assume deceit, but don't avoid truth. What's taken was never yours.", "不逆诈，被抢走的本来就不牢", "Don't assume deceit; what's taken was never solid", 1],
+["想离婚又怕伤害孩子", "成事不说，遂事不谏，既往不咎", "论语·八佾", "已成的事不必再说。孩子需要两个快乐的人，不是一个凑合的家。你的幸福才是给孩子最好的教育。", "What's done, don't dwell on. Kids need two happy people, not one forced home.", "孩子要快乐的你，不要凑合的家", "Kids want happy you, not a patched home", 3],
+["婆婆总是干预我们的生活方式", "事父母几谏，见志不从，又敬不违，劳而不怨", "论语·里仁", "对长辈可以委婉建议，她不听就继续恭敬、不违抗但不怨恨。不是忍气吞声，是设置温柔的边界。", "Gently advise elders; if unheard, remain respectful without resentment. Soft boundaries, not silent suffering.", "几谏不从，敬而不怨", "Advise gently; if unheard, respect without resentment", 3],
+["生了孩子后夫妻感情变淡", "发而皆中节，谓之和", "中庸", "情绪发出来但恰到好处叫和。孩子来了你们成了战友——战友情也是一种感情。偶尔约个会。", "Emotions expressed in measure is harmony. With a child you've become comrades—and that's also love. Occasionally date each other.", "战友也是情人，偶尔约会", "Comrades are lovers too; date occasionally", 3],
+["爸妈天天转发养生谣言给我", "道听而涂说，德之弃也", "论语·阳货", "路上听到就传播，这是道德的抛弃。告诉爸妈：您转的我每条都认真看了，但有些不太准，我们一起看看靠谱的。", "Hearsay spread carelessly abandons virtue. Tell them: I read everything you send, but some aren't accurate—let's check reliable sources together.", "道听途说不可取，陪他们一起看", "Hearsay abandoned virtue; watch together", 3],
+["想要二胎但老公不想", "二人同心，其利断金", "周易·系辞", "两个人心齐能断金。二胎不是一个人能决定的，先同心地沟通。把'我'变成'我们'。", "Two hearts aligned can sever metal. A second child isn't one person's decision—align hearts first. From me to us.", "同心断金，从我到我们", "Aligned hearts sever metal; from me to us", 3],
+["被朋友放鸽子三次还该信他吗", "人而无信，不知其可也", "论语·为政", "三次失信说明他的承诺不值钱。不是不原谅，是保护好自己——下次他约你先确认三遍。", "Three broken promises mean his word is worthless. It's not about forgiveness—it's about protecting yourself. Next time triple-confirm.", "三次不立信，保护自己", "Three times no trust; protect yourself", 1],
+["感觉自己像个工具人", "君子不器", "论语·为政", "你不是一件器皿，不是被定义成单一功能的工具。你可以是杯子也可以是花瓶，甚至是一座山。", "You're not a vessel—not defined by a single function. You can be a cup, a vase, or even a mountain.", "你不器，别定义自己", "You're not a vessel; don't define yourself", 4],
+["总觉得在浪费时间一事无成", "无用之用，方为大用", "庄子·人间世", "庄子说无用才是大用。发呆不是浪费时间，在信息爆炸的时代，空白是最奢侈的生产力。", "Zhuangzi says uselessness is great use. Zoning out isn't wasted time—in our information-saturated age, blank space is the ultimate productivity.", "无用是大用，空白是生产力", "Uselessness is great use; blank space is productivity", 4]
+];
+
+// ========== STATE ==========
+let lang='zh', catFilter=-1, curIdx=-1, favorites=[], searchTerm='';
+try{favorites=JSON.parse(localStorage.getItem('ygtwFav')||'[]');}catch(e){}
+function saveFav(){try{localStorage.setItem('ygtwFav',JSON.stringify(favorites));}catch(e){}}
+
+// ========== HELP MODALS ==========
+function openM(type){
+  const l=lang;
+  const c={
+    guide:l==='zh'?`<h2>📖 使用说明</h2>
+<p><b>YuguTether 的用法很简单：说出你的困境，我们为你搬山。</b></p>
+<p><b>第一步 · 找到你的困惑</b><br>
+在搜索框输入关键词（如"焦虑""加班""催婚""失眠"），或点击上方分类标签浏览：职场 / 人际 / 情绪 / 家庭 / 成长 / 理财 / 健康。</p>
+<p><b>第二步 · 点开一条问答</b><br>
+每条问答包含七层内容：</p>
+<ul>
+<li>📜 <b>古人原文</b> — 庄子、老子、孔子等先贤的原始话语与出处</li>
+<li>🗣️ <b>白话解读</b> — 把古文翻译成今天的语言</li>
+<li>💡 <b>今日心法</b> — 一句话提炼核心智慧</li>
+<li>🌏 <b>现代的回应</b> — 稻盛和夫、巴菲特、弗兰克尔等现代名人的名言，以及一本相关好书的观点</li>
+<li>🔍 <b>多维解读</b> — 从领域、心理、关键突破三个角度深入剖析</li>
+<li>✅ <b>行动建议</b> — 三条今天就能开始做的具体步骤</li>
+</ul>
+<p><b>第三步 · 随机与收藏</b><br>
+点"🎲 随机一句"让古人替你选一条；点"⭐"收藏心仪问答，随时回看。</p>
+<p><b>其他功能</b><br>
+菜单栏可切换<b>中英双语</b>与<b>亮暗主题</b>；详情页"📋 复制"可一键复制整条卡片分享给朋友。</p>
+<p><b>贴心提示：</b>搜索支持中英文关键词；收藏夹数据只存在你的浏览器里，不会上传。</p>`:`<h2>📖 Guide</h2>
+<p><b>YuguTether is simple: tell us your struggle, and we help you move the mountain.</b></p>
+<p><b>Step 1 · Find your dilemma</b><br>
+Type a keyword (anxiety, overtime, marriage pressure, insomnia...) into the search box, or tap a category: Work / Social / Emotion / Family / Growth / Money / Health.</p>
+<p><b>Step 2 · Open a card</b><br>
+Each answer has seven layers:</p>
+<ul>
+<li>📜 <b>Ancient text</b> — the sage's original words with source</li>
+<li>🗣️ <b>Plain reading</b> — classical Chinese rendered into today's language</li>
+<li>💡 <b>Heart method</b> — the core wisdom in one line</li>
+<li>🌏 <b>Modern echoes</b> — quotes from Inamori, Buffett, Frankl and a related book</li>
+<li>🔍 <b>Multi-angle reading</b> — domain, psychology, and the key breakthrough</li>
+<li>✅ <b>Action steps</b> — three concrete things you can do today</li>
+</ul>
+<p><b>Step 3 · Random &amp; favorites</b><br>
+Tap "🎲 Random" to let the ancients choose for you. Star entries to save them for later.</p>
+<p><b>More</b><br>
+The menu toggles <b>Chinese/English</b> and <b>light/dark themes</b>. The "📋 Copy" button exports the whole card to share.</p>
+<p><b>Tip:</b> Search works in both languages. Favorites stay in your browser only.</p>`,
+    disclaim:l==='zh'?`<h2>⚠️ 免责声明</h2>
+<p><b>1. 性质说明</b><br>
+本工具基于中国传统典籍（庄子、老子、论语、周易、孟子、中庸等）与现代公开著作制作，全部内容属<b>文化研究与心灵陪伴</b>范畴，并非科学预测、心理咨询、医疗建议或任何专业服务。</p>
+<p><b>2. 解读的主观性</b><br>
+"白话解读""今日心法""多维解读"为编者基于古籍的现代延伸阐释，带有主观性，不代表古籍唯一本义。不同流派、不同学者对同一句古语的理解可能不同。</p>
+<p><b>3. 不提供专业建议</b><br>
+本工具不提供医疗、法律、金融、心理治疗等专业建议。"行动建议"为通用生活参考，不能替代专业诊断与治疗。若您正经历严重情绪困扰、心理危机或健康问题，请务必及时联系专业人士或当地援助机构。</p>
+<p><b>4. 决策责任</b><br>
+请勿将本工具内容作为重大人生决策（如婚姻、投资、职业、医疗）的唯一依据。搬山靠的是您的行动与选择，工具只是递给您的一根绳。</p>
+<p><b>5. 数据与隐私</b><br>
+本工具为纯前端单文件应用，无服务器、无第三方跟踪。收藏夹等数据仅保存在本地浏览器（localStorage），不会上传任何数据；清除浏览器数据即可彻底删除。</p>
+<p><b>6. 知识产权</b><br>
+本工具代码以开源形式发布，仅限个人学习与娱乐使用。所引名言与书籍观点版权归原作者所有，仅作文化引用。请勿用于任何商业牟利行为。</p>
+<p>继续使用本工具即表示您已阅读、理解并同意以上全部条款。</p>`:`<h2>⚠️ Disclaimer</h2>
+<p><b>1. Nature:</b> Built upon Chinese classics (Zhuangzi, Laozi, Confucius, I Ching, etc.) and modern published works, all content is for <b>cultural study and emotional companionship</b>. It is not scientific prediction, therapy, medical advice, or any professional service.</p>
+<p><b>2. Subjectivity:</b> The plain readings, heart methods, and multi-angle interpretations are modern extensions by the editors, subjective in nature, and do not represent the sole meaning of the classics. Different schools may read the same verse differently.</p>
+<p><b>3. No professional advice:</b> This tool offers no medical, legal, financial, or therapeutic advice. Action steps are general life references only. If you are experiencing severe distress, crisis, or health issues, please contact professionals or local support services promptly.</p>
+<p><b>4. Decision responsibility:</b> Never use this content as the sole basis for major life decisions (marriage, investment, career, medical). Moving the mountain depends on your own actions—the tool is only a rope handed to you.</p>
+<p><b>5. Data &amp; privacy:</b> Pure front-end single-file app. No server, no tracking. Favorites stay in your browser's localStorage only; clearing browser data removes everything.</p>
+<p><b>6. Intellectual property:</b> Open-sourced for personal study and entertainment. Quoted sayings and book excerpts belong to their respective authors. Commercial misuse is prohibited.</p>
+<p>By using this tool you acknowledge and accept all terms above.</p>`,
+    about:l==='zh'?`<h2>ℹ️ 关于本工具</h2>
+<p><b>与古为徒 · YuguTether</b> — "在人群里走路时，手里牵一根古人递来的绳。"</p>
+<p>当你在现代生活中遇到困惑，不妨问问两千年前的智者。YuguTether 把 300+ 条"现代困境 × 古人智慧"做成了一座随身答疑库，让古人的话与现代的心声相遇。</p>
+<p><b>核心特色</b></p>
+<ul>
+<li>📚 <b>300+ 问答库</b> — 7 大分类：职场/人际/情绪/家庭/成长/理财/健康</li>
+<li>📜 <b>原典引文</b> — 每条都出自庄子、老子、论语、周易等真实古籍，标注出处</li>
+<li>🌏 <b>古今对读</b> — 古人原文 + 现代名人名言（稻盛和夫/巴菲特/弗兰克尔等）+ 好书观点</li>
+<li>🔍 <b>多维解读</b> — 领域视角 + 心理视角 + 关键突破点</li>
+<li>✅ <b>行动建议</b> — 每条附三条今天就能执行的具体步骤</li>
+<li>🎲 <b>随机一言</b> — 让古人每日为你赠一句</li>
+<li>⭐ <b>收藏夹</b> — 心仪问答离线保存（localStorage）</li>
+<li>🌐 <b>中英双语</b> — 全站一键切换</li>
+<li>🌙 <b>亮暗主题</b> — 自动记忆偏好</li>
+<li>📋 <b>卡片分享</b> — 一键复制完整解读发给朋友</li>
+</ul>
+<p><b>技术说明</b><br>
+纯前端单文件 HTML/CSS/JS，无后端、无依赖、无数据上传，浏览器打开即用，可离线保存本地使用。</p>
+<p><b>作者：</b>永远的兰兰 (Forever Chitanda)</p>
+<p><b>开源地址：</b><a href="https://github.com/podcatcher962/YuguTether" target="_blank" style="color:var(--accent)">github.com/podcatcher962/YuguTether</a></p>
+<p style="margin-top:10px;color:var(--dim);font-size:10px">© 永远的兰兰 · Forever Chitanda · 2026 · 仅供文化参考</p>`:`<h2>ℹ️ About</h2>
+<p><b>YuguTether</b> — "As you walk through the crowd, hold a rope handed down from the ancients."</p>
+<p>When modern life puzzles you, ask the sages of two thousand years ago. YuguTether turns 300+ "modern dilemma × ancient wisdom" pairs into a pocket library where ancient words meet modern hearts.</p>
+<p><b>Highlights</b></p>
+<ul>
+<li>📚 <b>300+ Q&amp;A pairs</b> — 7 categories: Work/Social/Emotion/Family/Growth/Money/Health</li>
+<li>📜 <b>Authentic citations</b> — from Zhuangzi, Laozi, Confucius, I Ching, with sources</li>
+<li>🌏 <b>Ancient × modern</b> — classics + modern voices (Inamori, Buffett, Frankl) + book insights</li>
+<li>🔍 <b>Multi-angle reading</b> — domain, psychology, and the key breakthrough</li>
+<li>✅ <b>Action steps</b> — three concrete steps per card, doable today</li>
+<li>🎲 <b>Random quote</b> — let the ancients speak to you daily</li>
+<li>⭐ <b>Favorites</b> — save offline (localStorage)</li>
+<li>🌐 <b>Bilingual</b> — full Chinese/English toggle</li>
+<li>🌙 <b>Light/dark themes</b> — remembers your preference</li>
+<li>📋 <b>Share cards</b> — one-tap copy the full reading</li>
+</ul>
+<p><b>Tech:</b> Single-file front-end HTML/CSS/JS. No backend, no tracking, no upload. Works offline.</p>
+<p><b>Author:</b> Forever Chitanda (永远的兰兰)</p>
+<p><b>Source:</b> <a href="https://github.com/podcatcher962/YuguTether" target="_blank" style="color:var(--accent)">github.com/podcatcher962/YuguTether</a></p>
+<p style="margin-top:10px;color:var(--dim);font-size:10px">© Forever Chitanda · 2026 · For cultural reference only</p>`
+  };
+  document.getElementById('modalBox').innerHTML=`<button class="modal-close" onclick="closeM()">✕</button>${c[type]||''}`;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function closeM(){document.getElementById('modalOverlay').classList.remove('show');}
+function showT(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._tid);t._tid=setTimeout(()=>t.classList.remove('show'),2200);}
+
+// ========== THEME ==========
+function applyTheme(t){document.documentElement.setAttribute('data-theme',t);const b=document.getElementById('btnTheme');if(b)b.textContent=t==='light'?'☀️':'🌙';}
+function toggleTheme(){const cur=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';applyTheme(cur);try{localStorage.setItem('ygtwTheme',cur);}catch(e){}}
+(function(){try{applyTheme(localStorage.getItem('ygtwTheme')||'dark');}catch(e){applyTheme('dark');}})();
+
+// ========== LANGUAGE ==========
+function setL(l){
+  lang=l;
+  document.getElementById('btnZh').className=l==='zh'?'active':'';
+  document.getElementById('btnEn').className=l==='en'?'active':'';
+  document.getElementById('searchBox').placeholder=l==='zh'?'输入困境关键词，如：焦虑、加班、催婚...':'Search: anxiety, overtime, loneliness...';
+  document.getElementById('btnRandom').textContent=l==='zh'?'随机一句':'Random';
+  document.getElementById('btnFav').textContent=l==='zh'?'收藏夹':'Favorites';
+  document.getElementById('btnHist').textContent=l==='zh'?'历史':'History';
+  document.getElementById('btnRandom2').textContent=l==='zh'?'再来一句':'Another';
+  document.getElementById('btnCopy').textContent=l==='zh'?'复制':'Copy';
+  document.getElementById('btnDl').textContent=l==='zh'?'下载图':'Image';
+  document.getElementById('btnTop').textContent=l==='zh'?'返回顶部':'Top';
+  document.getElementById('btnToggleFav').textContent=l==='zh'?'收藏/取消':'Fav/Unfav';
+  document.getElementById('lblBack').textContent=l==='zh'?'返回':'Back';
+  ['tGuide','tDisclaim','tAbout'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=l==='zh'?{tGuide:'使用说明',tDisclaim:'免责声明',tAbout:'关于'}[id]:{tGuide:'Guide',tDisclaim:'Disclaimer',tAbout:'About'}[id];});
+  renderCatBar();
+  renderDaily();
+  if(document.getElementById('mainPage').style.display!=='none')doSearch();
+  else renderDetail(curIdx);
+}
+
+// ========== CATEGORY BAR ==========
+function renderCatBar(){
+  const l=lang;
+  const bar=document.getElementById('catBar');
+  let html='';
+  for(let i=0;i<7;i++){
+    const label=lang==='zh'?CATS[i]:CATS_EN[i];
+    const cnt=Q.filter(q=>q[7]===i).length;
+    html+=`<span class="cat-chip${catFilter===i?' active':''}" onclick="setCat(${i})">${label} ${cnt}</span>`;
+  }
+  if(catFilter>=0)html+=`<span class="cat-chip" onclick="setCat(-1)" style="color:var(--f)">✕ ${l==='zh'?'全部':'All'}</span>`;
+  bar.innerHTML=html;
+}
+
+function setCat(i){catFilter=i;renderCatBar();doSearch();}
+
+// ========== SYNONYM SEARCH ==========
+const SYN={
+  '焦虑':['焦虑','紧张','担心','害怕','不安','心慌','烦躁','压力','内耗','迷茫','恐惧'],
+  '加班':['加班','加班','累','累死','卷','内卷','工作忙','熬夜','压力'],
+  '催婚':['催婚','结婚','单身','相亲','找对象','恋爱','婚姻','对象'],
+  '失眠':['失眠','睡','睡觉','睡不着','睡眠','熬夜','疲惫'],
+  '穷':['穷','钱','没钱','存款','工资','存钱','买房','消费','购物','理财','剁手','月光','信用卡'],
+  '胖':['胖','减肥','体重','健身','身材','吃','奶茶','暴食','外卖'],
+  '累':['累','疲惫','透支','心累','没劲','压力','焦虑','烦躁'],
+  '哭':['哭','难过','伤心','委屈','崩溃','想哭','伤心'],
+  '迷茫':['迷茫','方向','目标','意义','人生','未来','前途','焦虑','困惑'],
+  '孤独':['孤独','孤单','一个人','寂寞','没人懂','空虚','无人理解'],
+  '不自信':['自信','自卑','不如','自我怀疑','否定','认可','优秀','比较'],
+  '辞职':['辞职','离职','跳槽','转行','裸辞','工作','老板','上班'],
+  '朋友':['朋友','友谊','同事','闺蜜','兄弟','社交','不合群','人际','交往','绝交','放鸽子','借钱'],
+  '家庭':['家庭','父母','孩子','亲子','婆媳','老公','老婆','夫妻','离婚','吵架','原生'],
+  '健康':['健康','身体','生病','病','痛','失眠','颈椎','熬夜','养生','衰老'],
+  '拖延':['拖延','懒','自制力','坚持','半途而废','效率','时间','自律','习惯']
+};
+function expandQuery(s){
+  let keys=Object.keys(SYN);
+  for(let k of keys){if(s.includes(k)){return s+' '+SYN[k].join(' ');}}
+  // 英文同义映射
+  const enMap={'anxi':['anxious','stress','worry','fear','panic','pressure','burnout','overthink'],'slee':['sleep','insomnia','night','tired','exhaust'],'mone':['money','salary','save','spend','buy','debt','rich','poor'],'lon':['lonely','alone','isolat','empty'],'sad':['sad','cry','hurt','heartbreak','grief'],'work':['job','work','career','boss','overtime','burnout'],'fear':['fear','scared','afraid','worried']};
+  for(let k of Object.keys(enMap)){if(s.includes(k)){return s+' '+enMap[k].join(' ');}}
+  return s;
+}
+
+// ========== SEARCH & LIST ==========
+function doSearch(){
+  const raw=(document.getElementById('searchBox').value||'').toLowerCase();
+  searchTerm=raw;
+  let list=Q;
+  if(raw){
+    const s=expandQuery(raw);
+    list=Q.filter(q=>q[0].includes(s)||q[1].includes(s)||q[2].includes(s)||q[3].includes(s)||q[4].toLowerCase().includes(s));
+    // 若同义扩展无结果，回退到原始词
+    if(list.length===0&&s!==raw){
+      list=Q.filter(q=>q[0].includes(raw)||q[1].includes(raw)||q[2].includes(raw)||q[3].includes(raw)||q[4].toLowerCase().includes(raw));
+    }
+  }
+  if(catFilter>=0)list=list.filter(q=>q[7]===catFilter);
+  const div=document.getElementById('resultList');
+  if(list.length===0){div.innerHTML=`<div style="text-align:center;padding:20px;color:var(--dim)">${lang==='zh'?'无匹配结果，试试换个关键词':'No matches, try another keyword'}</div>`;return;}
+  const l=lang;
+  const favSet=new Set(favorites);
+  div.innerHTML=list.map((q,i)=>`
+    <div class="result-card" onclick="viewDetail(${Q.indexOf(q)})">
+      <div class="dilemma">${q[0]}</div>
+      <div class="meta">${l==='en'?q[4].substring(0,80)+'...':q[2]} · ${(l==='zh'?CATS:CATS_EN)[q[7]]} <span class="fav-star${favSet.has(Q.indexOf(q))?' active':''}" onclick="event.stopPropagation();quickFav(${Q.indexOf(q)})">${favSet.has(Q.indexOf(q))?'★':'☆'}</span></div>
+    </div>
+  `).join('');
+  document.getElementById('mainPage').style.display='block';
+  document.getElementById('detailPage').style.display='none';
+}
+
+// ========== DAILY QUOTE ==========
+let dailyIdx=0;
+function renderDaily(){
+  const el=document.getElementById('dailyCard');
+  if(!el)return;
+  const today=new Date().toDateString();
+  let seed=0;
+  for(let i=0;i<today.length;i++)seed+=today.charCodeAt(i);
+  dailyIdx=seed%Q.length;
+  const q=Q[dailyIdx];
+  const l=lang;
+  el.innerHTML=`<div style="font-size:11px;color:var(--dim);letter-spacing:1px;margin-bottom:4px">📆 ${l==='zh'?'今日古人赠言':'Today from the ancients'}</div><div style="font-size:14px;color:var(--gold)">「${q[1]}」</div><div style="font-size:11px;color:var(--dim);margin-top:4px">—— ${q[2]} · ${q[0]} · ${l==='zh'?'点击查看全文':'Tap to read more'}</div>`;
+}
+
+// ========== HISTORY ==========
+function saveHistory(idx){
+  try{
+    let arr=JSON.parse(localStorage.getItem('ygtwHist')||'[]');
+    arr=arr.filter(x=>x!==idx);
+    arr.unshift(idx);
+    if(arr.length>50)arr=arr.slice(0,50);
+    localStorage.setItem('ygtwHist',JSON.stringify(arr));
+  }catch(e){}
+}
+function showHistory(){
+  let arr=[];try{arr=JSON.parse(localStorage.getItem('ygtwHist')||'[]');}catch(e){}
+  if(arr.length===0){showT(lang==='zh'?'暂无浏览历史':'No history yet');return;}
+  catFilter=-1;document.getElementById('searchBox').value='';renderCatBar();
+  const l=lang;
+  const div=document.getElementById('resultList');
+  const list=arr.map(i=>Q[i]).filter(Boolean);
+  if(list.length===0){div.innerHTML=`<div style="text-align:center;padding:20px;color:var(--dim)">${l==='zh'?'暂无浏览历史':'No history yet'}</div>`;return;}
+  div.innerHTML=list.map(q=>{
+    const i=Q.indexOf(q);
+    return `<div class="result-card" onclick="viewDetail(${i})"><div class="dilemma">${q[0]}</div><div class="meta">${q[2]} · ${(l==='zh'?CATS:CATS_EN)[q[7]]}</div></div>`;
+  }).join('');
+  document.getElementById('mainPage').style.display='block';
+  document.getElementById('detailPage').style.display='none';
+}
+function clearHistory(){try{localStorage.removeItem('ygtwHist');}catch(e){}showT(lang==='zh'?'🗑 历史已清空':'History cleared');}
+
+// ========== DETAIL ==========
+function viewDetail(idx){
+  curIdx=idx;
+  saveHistory(idx);
+  document.getElementById('mainPage').style.display='none';
+  document.getElementById('detailPage').style.display='block';
+  renderDetail(idx);
+}
+
+function renderDetail(idx){
+  const q=Q[idx],l=lang;
+  const favSet=new Set(favorites);
+  const isFav=favSet.has(idx);
+  document.getElementById('btnToggleFav').textContent=isFav?(l==='zh'?'★ 已收藏':'★ Saved'):(l==='zh'?'☆ 收藏':'☆ Save');
+  const d=document.getElementById('detailContent');
+  const adv=buildAdvice(q,l);
+  const modern=buildModern(q,l);
+  d.innerHTML=`
+    <div class="cat-chip" style="display:inline-block;margin-bottom:6px;font-size:10px">${(lang==='zh'?CATS:CATS_EN)[q[7]]}</div>
+    <div class="dilemma" style="font-size:16px;color:var(--gold);margin-bottom:2px">${q[0]}</div>
+    ${l==='en'?`<div class="english" style="font-size:12px;color:var(--dim);margin-bottom:8px;font-style:normal">${q[4]}</div>`:''}
+    <div class="ancient">${q[1]}</div>
+    <div class="source">——${q[2]}</div>
+    ${l==='zh'?`<div class="vernacular">${q[3]}</div>`:`<div class="vernacular" style="font-size:12px;color:var(--dim)">${q[4]}</div>`}
+    <div class="heart">💡 ${l==='zh'?q[5]:q[6]}</div>
+    ${modern}
+    ${adv}
+  `;
+}
+
+// ========== MODERN RESPONSE ==========
+function buildModern(q,l){
+  const m=MODERN[q[7]]||MODERN[2];
+  const d=l==='zh'?m.zh:m.en;
+  const t=l==='zh'?'🌏 现代的回应':'Modern echoes';
+  const bt=l==='zh'?'📖 一本书的启发':'From a book';
+  let h=`<div style="margin-top:14px;border-top:1px dashed var(--bdr);padding-top:10px">`;
+  h+=`<div style="font-size:13px;color:var(--gold);letter-spacing:2px;margin-bottom:6px">${t}</div>`;
+  d.quote.forEach(qi=>{
+    h+=`<div style="font-size:13px;line-height:1.9;margin:6px 0;padding:8px 10px;background:var(--card);border-left:2px solid var(--e)">`;
+    h+=`<div>「${qi[1]}」</div>`;
+    h+=`<div style="font-size:11px;color:var(--dim);text-align:right;margin-top:4px">—— ${qi[0]}</div>`;
+    h+=`</div>`;
+  });
+  h+=`<div style="font-size:13px;color:var(--gold);letter-spacing:2px;margin:12px 0 6px">${bt}</div>`;
+  h+=`<div style="font-size:13px;line-height:1.9;margin:6px 0;padding:8px 10px;background:var(--inp);border:1px solid var(--bdr)">${d.book[0]}</div>`;
+  h+=`</div>`;
+  return h;
+}
+
+// ========== MODERN VOICES (现代回应) ==========
+// 每条：名人名言 + 近现代书籍观点，按分类定制
+const MODERN={
+  0:{zh:{quote:[['稻盛和夫','现场有神灵。工作现场的每一处细节，都是答案所在。焦虑时回到现场，答案就在手里。'],['彼得·德鲁克','管理不是控制，而是释放。与其内耗在"别人怎么看我"，不如把精力投到"我能贡献什么"。']],
+  book:['《高效能人士的七个习惯》史蒂芬·柯维 —— 把注意力放在"影响圈"（你能改变的事）而不是"关注圈"（你操心但改变不了的事）。职场80%的内耗，源于把两者搞反了。']},
+  en:{quote:[['Kazuo Inamori','The gods dwell in the workplace. Every detail at your work site holds an answer. When anxious, return to the site—the answer is in your hands.'],['Peter Drucker','Management is not control but release. Stop draining yourself on "what others think" and invest in "what can I contribute."']],
+  book:['The 7 Habits of Highly Effective People, Stephen Covey — Focus on your Circle of Influence (what you can change) instead of your Circle of Concern (what worries you but you cannot change). 80% of workplace burnout comes from swapping the two.']}},
+  1:{zh:{quote:[['卡耐基','一个人的成功，15%靠专业知识，85%靠人际沟通。不会说话不是缺陷，不练才是。'],['马歇尔·卢森堡','不带评论的观察是人类智力的最高形式。说"你总是迟到"是评判，说"这周你迟到了三次"是观察——后者才通向改变。']],
+  book:['《非暴力沟通》马歇尔·卢森堡 —— 四个步骤：观察、感受、需要、请求。把"你怎么这样"换成"我感到…因为我需要…你愿意…吗"。沟通不是技巧，是修心。']},
+  en:{quote:[['Dale Carnegie','Success is 15% professional knowledge and 85% human communication. Not being eloquent is no flaw—not practicing is.'],['Marshall Rosenberg','Observation without evaluation is the highest form of human intelligence. "You are always late" judges; "You were late three times this week" observes—the latter opens the door to change.']],
+  book:['Nonviolent Communication, Marshall Rosenberg — Four steps: observe, feel, need, request. Swap "What is wrong with you" for "I feel... because I need... would you be willing to..." Communication is not technique; it is self-cultivation.']}},
+  2:{zh:{quote:[['维克多·弗兰克尔','在刺激与反应之间，存在一个空间。在那个空间里，藏着我们的自由与力量。任何境遇都不能夺走你选择回应的自由。'],['叔本华','人生就像钟摆，在痛苦与无聊之间摆动。焦虑不可怕，可怕的是你误以为焦虑等于失败——它只是信号的噪音。']],
+  book:['《活出生命的意义》维克多·弗兰克尔 —— 集中营里他发现的真相：人可以被夺走一切，除了最后一种自由——选择以何种态度面对境遇的自由。情绪低谷时记住：你永远拥有"态度"这个选项。']},
+  en:{quote:[['Viktor Frankl','Between stimulus and response there is a space. In that space lies our freedom and our power. No circumstance can take away your freedom to choose your response.'],['Arthur Schopenhauer','Life swings like a pendulum between pain and boredom. Anxiety is not dangerous—what is dangerous is mistaking it for failure. It is just the noise of a signal.']],
+  book:['Mans Search for Meaning, Viktor Frankl — What he discovered in the concentration camp: everything can be taken from a person except one final freedom—the freedom to choose one attitude toward any circumstance. In the valleys of emotion, remember: you always hold the "attitude" option.']}},
+  3:{zh:{quote:[['约翰·戈特曼','幸福婚姻的秘诀不是解决所有冲突，而是修复冲突。每1次伤害，需要5次善意来修复。'],['武志红','家庭是最大的道场。你在家里处理不好关系，是因为你一直在重复童年的剧本——觉察剧本，才能改写剧本。']],
+  book:['《亲密关系》罗兰·米勒 —— 伴侣关系研究的结论：长期幸福的夫妻不是不吵架，而是吵架后修复得更好。关系不是找到对的人，是把自己变成对的人。']},
+  en:{quote:[['John Gottman','The secret of a happy marriage is not solving all conflicts but repairing them. Every 1 wound needs 5 acts of kindness to heal.'],['Wu Zhihong','Family is the greatest training ground. If you cannot handle family relationships, it is because you keep repeating your childhood script—notice the script before you can rewrite it.']],
+  book:['Intimate Relationships, Rowland Miller — Research conclusion: long-term happy couples are not those who never fight, but those who repair better after fighting. A relationship is not about finding the right person; it is about becoming the right person.']}},
+  4:{zh:{quote:[['纳瓦尔','在成为自己的这条路上，没有什么可以失去，只有收获。你唯一要战胜的，是昨天的自己。'],['卡罗尔·德韦克','失败的信息不是"我不行"，而是"我还没学会"。把"我不擅长"改成"我还没擅长"——一个字的距离，两种人生。']],
+  book:['《终身成长》卡罗尔·德韦克 —— 固定型思维者怕失败，成长型思维者爱挑战。差别不在天赋，在于你如何解释失败。把每次挫折读作"反馈"而不是"判决"，成长就开始了。']},
+  en:{quote:[['Naval Ravikant','On the path to becoming yourself, there is nothing to lose and everything to gain. The only person you need to beat is yesterday\'s you.'],['Carol Dweck','The message of failure is not "I cannot" but "I have not learned yet." Change "I am not good at this" to "I am not good at this yet"—one word, two different lives.']],
+  book:['Mindset, Carol Dweck — Fixed mindset people fear failure; growth mindset people embrace challenges. The difference is not talent but how you interpret failure. Read every setback as "feedback" instead of "verdict," and growth begins.']}},
+  5:{zh:{quote:[['巴菲特','别人贪婪我恐惧，别人恐惧我贪婪。真正的风险不是波动，是你不知道自己买的是什么。'],['查理·芒格','我这辈子见过的聪明人，没有一个不是每天读书的。你们的问题，都在书里有过答案。']],
+  book:['《穷查理宝典》查理·芒格 —— 多元思维模型：别用一把锤子看所有问题。理财的本质不是追涨杀跌，是建立"反过来想"的思考习惯：想致富，先研究人是怎么变穷的。']},
+  en:{quote:[['Warren Buffett','Be fearful when others are greedy, and greedy when others are fearful. Real risk is not volatility—it is not knowing what you are buying.'],['Charlie Munger','I have never met a smart person in my life who does not read every day. All your questions have answers in books.']],
+  book:['Poor Charlie\'s Almanack, Charlie Munger — Mental models from many disciplines: do not treat every problem like a nail because you only hold a hammer. The essence of finance is not chasing highs and cutting lows; it is the habit of "inverting"—to get rich, first study how people get poor.']}},
+  6:{zh:{quote:[['约翰·瑞迪','运动是改善情绪最可靠、最廉价、最没有副作用的药物。运动时大脑分泌的多巴胺，比任何药物都诚实。'],['医学界共识','睡眠是最好的修复，运动是最好的抗抑郁药，饮食是最好的体检报告。身体不会说谎。']],
+  book:['《运动改造大脑》约翰·瑞迪 —— 科学结论：运动不仅塑造肌肉，还重塑大脑。规律运动对抑郁的改善效果，不亚于药物，且没有副作用。情绪差的时候，先动起来，再谈其他。']},
+  en:{quote:[['John Ratey','Exercise is the most reliable, cheapest, and most side-effect-free medicine for improving mood. The dopamine your brain releases during exercise is more honest than any pill.'],['Medical consensus','Sleep is the best repair, exercise the best antidepressant, diet the best health report. The body does not lie.']],
+  book:['Spark: The Revolutionary New Science of Exercise and the Brain, John Ratey — Scientific finding: exercise builds not only muscle but also brain. Regular exercise rivals antidepressants in treating depression, without side effects. When your mood is low, move first—then talk about the rest.']}}
+};
+// 按分类定制多维解读 + 行动建议
+const ADVICE={
+  0:{zh:{ang:['💼 工作层面：问题的根源往往不在事情本身，而在你和这份工作的关系。退一步看，是技能不匹配、价值不认可，还是节奏不合拍？明确卡点，你才有解药。','🧠 心理层面：职场消耗你的，从来不是工作量，而是不确定感。把模糊的焦虑变成清单上的具体条目，每划掉一项，信心就回来一分。','🔑 关键一步：与其纠结"要不要继续忍"，不如问自己"我在这里还能学到什么"。只要答案不是"没有"，这里就还是你的学堂。'],
+  act:['写下一份"我的职场资产负债表"：这段经历给了你什么能力、人脉、资源？离开前先算清资产。','选一件你能控制的小事做到极致（哪怕只是把周报写漂亮），找回掌控感。','设定一个明确的"观察期"（如3个月），到期再决定去留，避免情绪化决策。']},
+  en:{ang:['Work level: the issue is rarely the task itself—it is your relationship to the work. Is it a skill mismatch, unrecognized value, or a rhythm problem? Name the blocker, find the cure.','Mind level: what drains you at work is uncertainty, not workload. Turn vague anxiety into concrete checklist items—each one crossed off restores confidence.','Key step: instead of asking "should I endure," ask "what can I still learn here?" As long as the answer isn\'t "nothing," this place is still your school.'],
+  act:['Write a "career balance sheet": what skills, connections, and resources has this experience given you? Count assets before you leave.','Pick one small thing you fully control and do it excellently—regain your sense of agency.','Set a clear "observation period" (e.g., 3 months), then decide—avoid emotional decisions.']}},
+  1:{zh:{ang:['🤝 关系层面：人际的痛，大多源于"期待错位"。你给了十分，却期待对方按你的剧本回应。先把期待说出来，而不是藏在心里等对方猜。','🧠 心理层面：被拒绝、被冷落的瞬间，容易触发"我不够好"的自我怀疑。记住：别人的态度是一面镜子，照出的是他，不是你。','🔑 关键一步：边界不是墙，是门。学会温和而坚定地说"不"，关系反而更健康——清晰的人最被尊重。'],
+  act:['今晚想一件"你一直忍着没说"的事，用"我觉得…我希望…"的句式温和表达出来。','给一段消耗你的关系画个圈：圈外是别人，圈内是你自己，守住圈内的平静。','主动发起一次真诚的邀约或倾听，你播的善意会回来。']},
+  en:{ang:['Relationship level: most interpersonal pain comes from mismatched expectations. You gave ten, but expect them to follow your script. Speak your expectations instead of hiding them.','Mind level: rejection instantly triggers "I am not good enough." Remember: their attitude is a mirror that shows them, not you.','Key step: boundaries are not walls—they are doors. Learn to say "no" gently but firmly; relationships grow healthier. Clear people are the most respected.'],
+  act:['Tonight, express one thing you have been holding in, using "I feel... I hope..." language.','Draw a circle around a draining relationship: outside is them, inside is you. Guard the calm within.','Initiate one sincere invitation or listening session—your kindness will return.']}},
+  2:{zh:{ang:['🌊 情绪层面：情绪不是敌人，是信使。焦虑在提醒你准备，悲伤在提醒你珍惜。先接纳它，才能听懂它要说什么。','🧠 心理层面：想不通的根源是"反刍"——反复咀嚼同一件事。大脑需要出口：写下来、说出来、动起来，任何一个都有效。','🔑 关键一步：情绪风暴中，先处理心情，再处理事情。深呼吸三次，等风暴过去，你会看见更清楚的路。'],
+  act:['找一个本子，把脑子里转个不停的想法全部倒出来，不评判、不停顿，写满一页。','给自己设一个"情绪休息站"：每天10分钟，只听音乐或散步，不刷手机。','把"我为什么这么难受"改成"我现在需要什么"——后者指向行动，前者只会打转。']},
+  en:{ang:['Emotion level: emotions are not enemies—they are messengers. Anxiety prepares you; sadness reminds you to cherish. Accept it first to hear what it says.','Mind level: what keeps you stuck is rumination—chewing the same thought. The mind needs an exit: write it, say it, move it. Any one works.','Key step: in a storm of emotion, fix the mood first, then the matter. Three deep breaths; when the storm passes, the road becomes clear.'],
+  act:['Take a notebook and pour out every circling thought—no judging, no stopping, until the page is full.','Set up a "mood rest stop": 10 minutes daily of music or walking, no phone.','Change "why do I feel so bad" into "what do I need right now"—the latter points to action.']}},
+  3:{zh:{ang:['🏠 家庭层面：家人的话常常是爱的笨拙表达。他们催你、管你、比较你，背后是怕你走弯路——先听懂那层担心。','🧠 心理层面：家庭关系里最难的是"课题分离"：他们的人生期待是他们的课题，你的人生选择是你的课题。分清边界，才能温柔。','🔑 关键一步：改变家人很难，改变相处方式很容易。多打一个电话、多说一句"我挺好的"，关系会自己松动。'],
+  act:['本周主动联系一次家人，不问对错，只聊聊日常——关系的裂缝都是从日常修复的。','把"他们不理解我"换成"他们用了不懂我的方式爱我"，你的怨气会消一半。','在家庭矛盾中，先保情绪、再谈道理：等双方都平静了，沟通才有效。']},
+  en:{ang:['Family level: family words are often clumsy expressions of love. Their pushing, controlling, and comparing hides fear of you taking a wrong path—hear the worry beneath.','Mind level: the hardest thing in family is separation of concerns. Their expectations are their lesson; your choices are yours. Clear the boundary to be gentle.','Key step: changing family is hard; changing how you interact is easy. One more call, one more "I am fine"—the relationship loosens by itself.'],
+  act:['Reach out to family this week—no right or wrong, just daily talk. Cracks heal through dailyness.','Replace "they don\'t understand me" with "they loved me in a way that couldn\'t reach me"—half the resentment dissolves.','In family conflict, protect the emotion before the logic: communicate only when both are calm.']}},
+  4:{zh:{ang:['🌱 成长层面：所有的"做不到"都只是"还没到"。拖延、半途而废、三分钟热度，都是因为目标太大、反馈太慢。把目标切小，把反馈调快。','🧠 心理层面：你不是懒，是怕——怕做了还是不够好，怕努力了还是输。允许自己先"做得很烂"，烂着烂着就好了。','🔑 关键一步：别等状态好了再开始，是开始了状态才会好。哪怕只做5分钟，也算破冰。'],
+  act:['把"我要学X"改成"今天学X的5分钟"——小到不可能失败，就容易开始。','设一个"烂开始"仪式：每天固定时间、固定地点做5分钟，不管质量。','完成一个小目标后立刻奖励自己，让大脑把"努力"和"快乐"连上线。']},
+  en:{ang:['Growth level: every "I cannot" is just "not yet." Procrastination, quitting, and three-day passion come from goals too big and feedback too slow. Shrink the goal, speed the feedback.','Mind level: you are not lazy—you are afraid. Afraid of not being good enough, of trying and losing. Allow yourself to start badly; bad becomes better with practice.','Key step: do not wait for good mood to start—starting creates the mood. Even 5 minutes breaks the ice.'],
+  act:['Change "I want to learn X" to "learn X for 5 minutes today"—so small it cannot fail, so easy to start.','Set a "messy start" ritual: 5 minutes at a fixed time and place, quality irrelevant.','Reward yourself immediately after a small win—connect "effort" with "pleasure" in your brain.']}},
+  5:{zh:{ang:['💰 金钱层面：花钱的快乐是即时满足，攒钱的快乐是延迟满足。前者让钱包变轻，后者让底气变重。先分清"需要"和"想要"。','🧠 心理层面：冲动消费买的往往不是东西，是情绪——空虚、焦虑、被比较。购物车是最好的情绪诊断书。','🔑 关键一步：给自己设一道"冷静门槛"：想买的东西先放购物车3天，3天后还想买再说。多数冲动会自己蒸发。'],
+  act:['做一次"消费复盘"：翻出上月账单，标出哪些是"想要"，下次先砍掉它们。','开启"一进一出"原则：买一件新的，先处理一件旧的。','把工资到账日设为"冷静日"：当天不购物，先记账。']},
+  en:{ang:['Money level: spending buys instant satisfaction; saving buys delayed fulfillment. The first lightens your wallet, the second strengthens your backbone. Distinguish "need" from "want" first.','Mind level: impulse purchases buy emotions, not goods—emptiness, anxiety, comparison. Your shopping cart is a diagnosis of your mood.','Key step: set a "cooling threshold": anything you want goes into the cart for 3 days. If you still want it after, buy it. Most impulses evaporate.'],
+  act:['Do a "spending review": look at last month\'s bills, mark what was "want," cut those next time.','Adopt "one in, one out": for each new item, dispose of an old one.','Make payday a "calm day": no shopping, just accounting.']}},
+  6:{zh:{ang:['🫀 身体层面：身体是最诚实的员工，你熬夜、久坐、暴食，它都会记账。现在的疼痛是它在向你请假——先别硬扛。','🧠 心理层面：很多身体不适是心理压力的出口。焦虑紧张久了，肌肉、肠胃、睡眠都会抗议。调理身体，也要调理心情。','🔑 关键一步：别追求"立刻变健康"，追求"今天比昨天好一点"：多喝一杯水、早睡半小时、走两千步，都是赢。'],
+  act:['从今晚开始，把手机放在离床两米远的地方充电——这是改善睡眠最便宜的一步。','每天设两个"微活动"闹钟：上午下午各一次，站起来伸展2分钟。','记一周"身体日记"：每天一行，睡了几小时、走了多少步、心情几分。看见，才会改变。']},
+  en:{ang:['Body level: the body is your most honest employee. Stay up late, sit long, binge—it keeps the books. Current pain is it asking for leave. Do not just tough it out.','Mind level: many physical complaints are outlets for mental pressure. Prolonged anxiety shows up in muscles, digestion, and sleep. Care for the body means caring for the mood.','Key step: do not chase "instantly healthy"; chase "better than yesterday": one more glass of water, thirty minutes earlier to bed, two thousand more steps—all wins.'],
+  act:['Tonight, charge your phone two meters from the bed—the cheapest fix for better sleep.','Set two "micro-move" alarms daily: stand and stretch for 2 minutes each.','Keep a week-long "body diary": one line daily—hours slept, steps walked, mood score. Seeing leads to changing.']}}
+};
+
+function buildAdvice(q,l){
+  const a=ADVICE[q[7]]||ADVICE[2];
+  const d=l==='zh'?a.zh:a.en;
+  const t=l==='zh'?'🔍 多维解读':'Multi-angle reading';
+  const s=l==='zh'?'✅ 给你三条行动建议':'Three steps to try';
+  let h=`<div style="margin-top:14px;border-top:1px solid var(--bdr);padding-top:10px">`;
+  h+=`<div style="font-size:13px;color:var(--gold);letter-spacing:2px;margin-bottom:6px">${t}</div>`;
+  h+=d.ang.map(x=>`<div style="font-size:13px;line-height:1.9;margin:5px 0;padding:8px 10px;background:var(--inp);border-left:2px solid var(--accent)">${x}</div>`).join('');
+  h+=`<div style="font-size:13px;color:var(--gold);letter-spacing:2px;margin:12px 0 6px">${s}</div>`;
+  h+=d.act.map((x,i)=>`<div style="font-size:13px;line-height:1.9;margin:5px 0;padding:8px 10px;background:var(--card);border:1px solid var(--bdr)">${i+1}. ${x}</div>`).join('');
+  h+=`</div>`;
+  return h;
+}
+
+function backToMain(){
+  document.getElementById('mainPage').style.display='block';
+  document.getElementById('detailPage').style.display='none';
+  if(searchTerm||catFilter>=0)doSearch();else doSearch();
+}
+
+// ========== FAVORITES ==========
+function toggleFav(){
+  if(curIdx<0)return;
+  const i=favorites.indexOf(curIdx);
+  if(i>=0){favorites.splice(i,1);showT(lang==='zh'?'已取消收藏':'Removed from favs');}
+  else{favorites.push(curIdx);showT(lang==='zh'?'已收藏 ★':'Favorited ★');}
+  saveFav();renderDetail(curIdx);
+}
+
+function quickFav(idx){
+  const i=favorites.indexOf(idx);
+  if(i>=0)favorites.splice(i,1);else favorites.push(idx);
+  saveFav();doSearch();
+}
+
+function showFavorites(){
+  if(favorites.length===0){showT(lang==='zh'?'收藏夹是空的':'No favorites yet');return;}
+  catFilter=-1;
+  document.getElementById('searchBox').value='';
+  document.getElementById('favCount').textContent=favorites.length;
+  const l=lang,favSet=new Set(favorites);
+  const div=document.getElementById('resultList');
+  const list=favorites.map(i=>Q[i]).filter(Boolean);
+  div.innerHTML=list.map(q=>`
+    <div class="result-card" onclick="viewDetail(${Q.indexOf(q)})">
+      <div class="dilemma">${q[0]}</div>
+      <div class="meta">${q[2]} · ${(lang==='zh'?CATS:CATS_EN)[q[7]]} <span class="fav-star active">★</span></div>
+    </div>
+  `).join('');
+  document.getElementById('mainPage').style.display='block';
+  document.getElementById('detailPage').style.display='none';
+  renderCatBar();
+}
+
+// ========== RANDOM ==========
+function randomOne(){
+  const list=catFilter>=0?Q.filter(q=>q[7]===catFilter):Q;
+  const idx=Q.indexOf(list[Math.floor(Math.random()*list.length)]);
+  viewDetail(idx);
+}
+
+// ========== COPY ==========
+function copyCard(){
+  if(curIdx<0)return;
+  const q=Q[curIdx];
+  const text=`【${q[0]}】\n古人言：${q[1]}（${q[2]}）\n今解：${q[3]}\nEnglish: ${q[4]}\n今日心法：${q[5]}\n——与古为徒 · YuguTether`;
+  navigator.clipboard.writeText(text).then(()=>showT(lang==='zh'?'已复制':'Copied')).catch(()=>showT(lang==='zh'?'复制失败':'Copy failed'));
+}
+
+// ========== DOWNLOAD CARD (PNG) ==========
+function downloadCard(){
+  if(curIdx<0)return;
+  const q=Q[curIdx];
+  const l=lang;
+  const W=600,H=840;
+  const cv=document.getElementById('cv');
+  cv.width=W;cv.height=H;
+  const c=cv.getContext('2d');
+  // 背景
+  const grad=c.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,'#0d0d1a');grad.addColorStop(1,'#13132b');
+  c.fillStyle=grad;c.fillRect(0,0,W,H);
+  // 网格
+  c.strokeStyle='rgba(30,55,153,0.15)';c.lineWidth=1;
+  for(let x=0;x<W;x+=30){c.beginPath();c.moveTo(x,0);c.lineTo(x,H);c.stroke();}
+  for(let y=0;y<H;y+=30){c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke();}
+  // 边框
+  c.strokeStyle='#4a69bd';c.lineWidth=3;c.strokeRect(10,10,W-20,H-20);
+  c.strokeStyle='rgba(74,105,189,0.4)';c.lineWidth=1;c.strokeRect(20,20,W-40,H-40);
+  // 标题
+  c.fillStyle='#ffd700';
+  c.font='bold 28px "Microsoft YaHei","PingFang SC",sans-serif';
+  c.textAlign='center';
+  c.fillText('与 古 为 徒 · YuguTether',W/2,60);
+  c.font='14px "Microsoft YaHei",sans-serif';
+  c.fillStyle='#7f8fa6';
+  c.fillText('At the crossroads, ask the ancients',W/2,88);
+  // 分隔线
+  c.strokeStyle='rgba(255,215,0,0.4)';c.lineWidth=1;
+  c.beginPath();c.moveTo(60,105);c.lineTo(W-60,105);c.stroke();
+  // 困境
+  c.fillStyle='#c8d6e5';
+  c.font='13px "Microsoft YaHei",sans-serif';
+  c.textAlign='left';
+  c.fillText('困 境  ·  DILEMMA',60,135);
+  c.font='bold 22px "Microsoft YaHei",sans-serif';
+  c.fillStyle='#ffd700';
+  wrapText(c,q[0],60,165,W-120,30);
+  // 古人言
+  let y=wrapText(c,q[0],60,165,W-120,30);
+  y+=30;
+  c.font='13px "Microsoft YaHei",sans-serif';c.fillStyle='#c8d6e5';
+  c.fillText('古 人 言  ·  THE ANCIENTS SAID',60,y);
+  y+=8;
+  c.font='bold 20px "KaiTi","STKaiti","Microsoft YaHei",serif';c.fillStyle='#f1f2f6';
+  y=wrapText(c,q[1],60,y+30,W-120,32)+14;
+  c.font='14px "Microsoft YaHei",sans-serif';c.fillStyle='#7f8fa6';c.textAlign='right';
+  c.fillText('—— '+q[2],W-60,y);
+  c.textAlign='left';
+  y+=28;
+  // 白话
+  c.strokeStyle='rgba(74,105,189,0.4)';
+  c.beginPath();c.moveTo(60,y);c.lineTo(W-60,y);c.stroke();
+  y+=8;
+  c.font='13px "Microsoft YaHei",sans-serif';c.fillStyle='#c8d6e5';
+  c.fillText('白 话  ·  PLAIN READING',60,y);
+  c.font='15px "Microsoft YaHei",sans-serif';c.fillStyle='#c8d6e5';
+  y=wrapText(c,l==='zh'?q[3]:q[4],60,y+30,W-120,26)+20;
+  // 心法框
+  const hh=Math.min(90,H-y-30);
+  c.fillStyle='rgba(255,215,0,0.08)';
+  c.fillRect(50,y,500,hh);
+  c.strokeStyle='rgba(255,215,0,0.3)';c.lineWidth=1;
+  c.strokeRect(50,y,500,hh);
+  c.fillStyle='#ffd700';c.font='bold 17px "Microsoft YaHei",sans-serif';c.textAlign='center';
+  c.fillText('💡 '+(l==='zh'?'今日心法':'HEART METHOD'),W/2,y+30);
+  const heart=l==='zh'?q[5]:q[6];
+  c.font='15px "Microsoft YaHei",sans-serif';c.textAlign='center';
+  wrapText(c,heart,W/2,y+58,W-140,24);
+  c.textAlign='left';
+  // 页脚
+  c.font='12px "Microsoft YaHei",sans-serif';c.fillStyle='#576574';c.textAlign='center';
+  c.fillText('© 永远的兰兰 · Forever Chitanda · 与古为徒 YuguTether · 仅供文化参考',W/2,H-28);
+  // 下载
+  try{
+    const a=document.createElement('a');
+    a.href=cv.toDataURL('image/png');
+    a.download='YuguTether_'+curIdx+'.png';
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    showT(lang==='zh'?'🖼️ 卡片已下载':'Image downloaded');
+  }catch(e){showT(lang==='zh'?'下载失败':'Download failed');}
+}
+function wrapText(c,text,x,y,maxW,lineH){
+  const chars=String(text).split('');
+  let line='',yy=y;
+  for(let i=0;i<chars.length;i++){
+    line+=chars[i];
+    if(c.measureText(line).width>maxW){
+      c.fillText(line.slice(0,-1),x,yy);
+      line=chars[i];yy+=lineH;
+    }
+  }
+  if(line)c.fillText(line,x,yy);
+  return yy+lineH;
+}
+
+// ========== SCROLL TOP ==========
+function scrollTop2(){
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('topBtn').style.display='none';
+}
+window.addEventListener('scroll',function(){
+  const b=document.getElementById('topBtn');
+  if(b)b.style.display=(window.scrollY>300)?'block':'none';
+});
+
+// init
+renderCatBar();doSearch();renderDaily();setTimeout(()=>document.getElementById('favCount').textContent=favorites.length,100);
+</script>
+</body>
+</html>
