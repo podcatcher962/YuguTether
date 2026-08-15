@@ -56,10 +56,15 @@ input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 8px rgba(74
 .fav-star.active{color:var(--gold)}
 #detailBack{cursor:pointer;color:var(--accent);font-size:13px;margin-bottom:10px;display:inline-block}
 @media(max-width:480px){.card{padding:14px 16px 18px}.hdr h1{font-size:22px}.cat-bar{gap:4px}.cat-chip{padding:5px 9px;font-size:11px}}
+/* 开屏海报 */
+#splash{position:fixed;inset:0;z-index:300;background:#f2e6cd url('generated-images/YuguTether_poster_final.jpg') center/contain no-repeat;animation:splashFade 9s ease forwards;}
+@keyframes splashFade{0%{opacity:0}8%{opacity:1}70%{opacity:1}100%{opacity:0;visibility:hidden}}
 </style>
 <script>document.documentElement.setAttribute('data-theme',(function(){try{return localStorage.getItem('ygtwTheme')||'light'}catch(e){return'light'}})());</script>
 </head>
 <body>
+<div id="splash"></div>
+<audio id="bgm" loop src="audio/yugu.mp3"></audio>
 
 <div class="hdr">
 <h1>与古为徒 · YuguTether</h1>
@@ -74,7 +79,8 @@ input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 8px rgba(74
 <span style="color:var(--bdr)">|</span>
 <a id="btnZh" class="active" onclick="setL('zh')">中</a>
 <a id="btnEn" onclick="setL('en')">EN</a>
-<a id="btnTheme" onclick="toggleTheme()" style="font-size:13px">🌙</a>
+<a id="btnTheme" onclick="toggleTheme()" style="font-size:13px"><span id="themeIcon">🌙</span> <span id="tTheme">主题</span></a>
+<a id="btnSound" onclick="toggleSound()" title="背景音乐">♪ <span id="tSound">音乐</span></a>
 </div>
 
 <div class="card" id="mainPage">
@@ -746,15 +752,37 @@ function closeM(){document.getElementById('modalOverlay').classList.remove('show
 function showT(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._tid);t._tid=setTimeout(()=>t.classList.remove('show'),2200);}
 
 // ========== THEME ==========
-function applyTheme(t){document.documentElement.setAttribute('data-theme',t);const b=document.getElementById('btnTheme');if(b)b.textContent=t==='light'?'☀️':'🌙';}
+function applyTheme(t){document.documentElement.setAttribute('data-theme',t);const b=document.getElementById('themeIcon');if(b)b.textContent=t==='light'?'🌙':'☀️';}
 function toggleTheme(){const cur=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';applyTheme(cur);try{localStorage.setItem('ygtwTheme',cur);}catch(e){}}
 (function(){try{applyTheme(localStorage.getItem('ygtwTheme')||'light');}catch(e){applyTheme('light');}})();
+
+// ========== 背景音乐（默认播放） ==========
+let soundOn = true;
+function toggleSound(){
+  soundOn = !soundOn;
+  const bgm = document.getElementById('bgm');
+  if(soundOn){ bgm.play().catch(()=>{}); }
+  else { bgm.pause(); }
+  document.getElementById('btnSound').className = soundOn ? 'active' : '';
+}
+(function(){
+  const bgm = document.getElementById('bgm');
+  if(!bgm) return;
+  bgm.volume = 0.35;
+  bgm.play().catch(()=>{});
+  document.getElementById('btnSound').className = 'active';
+  document.addEventListener('pointerdown', function(){
+    if(soundOn && bgm.paused) bgm.play().catch(()=>{});
+  });
+})();
 
 // ========== LANGUAGE ==========
 function setL(l){
   lang=l;
   document.getElementById('btnZh').className=l==='zh'?'active':'';
   document.getElementById('btnEn').className=l==='en'?'active':'';
+  document.getElementById('tTheme').textContent=l==='zh'?'主题':'Theme';
+  document.getElementById('tSound').textContent=l==='zh'?'音乐':'Music';
   document.getElementById('searchBox').placeholder=l==='zh'?'输入困境关键词，如：焦虑、加班、催婚...':'Search: anxiety, overtime, loneliness...';
   document.getElementById('btnRandom').textContent=l==='zh'?'随机一句':'Random';
   document.getElementById('btnFav').textContent=l==='zh'?'收藏夹':'Favorites';
